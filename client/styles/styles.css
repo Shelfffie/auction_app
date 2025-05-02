@@ -1,0 +1,154 @@
+* {
+  box-sizing: border-box;
+}
+.app-description {
+  display: flex;
+  justify-content: space-between;
+  height: 754px;
+  background-color: #6e8566;
+}
+
+.platform-description {
+  padding-top: 308px;
+  padding-left: 70px;
+}
+
+.about-title {
+  color: #fff2dd;
+  font-size: 65px;
+  margin: 0;
+}
+
+.about-text {
+  color: #fff2dd;
+  font-size: 25px;
+}
+
+.about-text-brown {
+  color: #554332;
+  font-size: 25px;
+}
+
+.photo1-container {
+  padding-top: 270px;
+}
+
+.currents-lots {
+  margin: none;
+  background-color: #6d5640;
+  height: 625px;
+  width: 100%;
+}
+
+.lots-tittle {
+  padding: 80px 0 70px 100px;
+}
+
+.buttons-lots {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.auctions-block {
+  background-color: #fffcf8;
+  height: 277px;
+  box-sizing: border-box;
+  padding: 20px;
+  width: 406px;
+  border-radius: 12px;
+  box-shadow: 10px 10px 10px #4f3e2f;
+  transition: all 0.3s ease;
+}
+
+.auctions-block:hover {
+  background-color: #fff2dd;
+  transform: scale(1.02);
+}
+
+.look-add-buttons {
+  display: flex;
+  gap: 160px;
+  align-items: center;
+  justify-content: center;
+  height: 754px;
+  background-color: #6e8566;
+}
+
+.block-for-photo-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #6d5640;
+  padding: 15px;
+  box-shadow: 10px 10px 10px rgb(3, 30, 11, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.block-for-photo-image:hover {
+  transform: scale(1.02);
+}
+
+.donut-image {
+  height: 450px;
+}
+
+.about-auctions {
+  position: relative;
+  box-sizing: border-box;
+  padding-left: 90px;
+  padding-top: 50px;
+  background-color: #6e8566;
+  width: 100%;
+  height: 850px;
+}
+
+.mini-brown-block {
+  box-sizing: border-box;
+  margin-left: -90px;
+  background-color: #6d5640;
+  padding: 10px 90px 10px 90px;
+}
+
+.buttons-about-sections {
+  display: flex;
+  gap: 40px;
+}
+
+.button-about {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  width: 210px;
+  height: 60px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.create-lot-button-about {
+  background-color: #6d5640;
+}
+
+.create-lot-button-about:hover {
+  background-color: #4f3e2f;
+  transition: all 0.3s ease;
+}
+
+.make-bet-button-about {
+  background-color: #fff2dd;
+}
+
+.make-bet-button-about:hover {
+  background-color: rgb(212, 192, 156);
+  transition: all 0.3s ease;
+}
+
+.two-hands-png {
+  position: absolute;
+  height: 707px;
+  left: 700px;
+  z-index: 20;
+}
