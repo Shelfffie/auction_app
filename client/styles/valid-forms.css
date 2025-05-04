@@ -1,0 +1,98 @@
+.all-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #6e8566;
+  width: 100%;
+}
+
+.donut-on {
+  position: relative;
+  display: flex;
+  margin-right: 60px;
+  margin-bottom: 20px;
+  color: #fff2dd;
+  font-size: 64px;
+}
+
+.block-for-registation {
+  background-color: #6d5640;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 500px;
+  width: 100%;
+  margin-bottom: px;
+}
+
+label {
+  color: #fff2dd;
+  font-size: 25px;
+  margin: 0;
+}
+
+.input {
+  color: #554332;
+  font-size: 20px;
+  background-color: #fff2dd;
+  margin: 15px 0 0px 0;
+  width: 400px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.input.valid {
+  border: 5px solid rgb(28, 134, 28);
+}
+
+input.invalid {
+  border: 5px solid rgba(164, 65, 47, 0.93);
+}
+
+.fake-pass {
+  display: none;
+}
+
+.sign-up-button {
+  font-size: 25px;
+  width: 300px;
+  height: 60px;
+  color: #554332;
+  background-color: #a3bc89;
+  border-radius: 5px;
+  border: 0;
+}
+
+.sign-up-button:hover {
+  background-color: #80936c;
+  transition: background-color 0.3s ease;
+}
+
+.sign-up-button:active {
+  outline: 2px solid #80936c;
+}
+
+.log-in-margin {
+  margin-top: 40px;
+}
+
+.validation-message {
+  color: #e7b499;
+}
+
+.Log-sign-in {
+  text-decoration: underline #fff2dd;
+  padding-top: 10px;
+  color: #fff2dd;
+  font-size: 15px;
+  margin: 0;
+}
+
+.Log-sign-in:hover {
+  text-decoration: underline rgb(212, 192, 156);
+  color: rgb(212, 192, 156);
+  transition: all 0.3s ease;
+}
