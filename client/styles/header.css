@@ -62,7 +62,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff2dd;
+  background-color: rgb(212, 192, 156);
   height: 55px;
   width: 210px;
   border-radius: 10px;
@@ -70,6 +70,6 @@ a {
 }
 
 .log-in-button:hover {
-  background-color: rgb(212, 192, 156);
+  background-color: #fff2dd;
   transition: all 0.3s ease;
 }

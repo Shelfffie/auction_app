@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LogInForm from "../components/log-in-form.jsx";
+import LogInForm from "./../components/sign-up-and-log-in/log-in-form.jsx";
 
 function LogIn() {
   const [count, setCount] = useState(0);

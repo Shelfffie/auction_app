@@ -22,8 +22,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 50px;
+  min-height: 500px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.block-for-registation div {
+  display: flex;
   flex-direction: column;
-  min-height: 450px;
+}
+
+.block-for-sign-up {
+  background-color: #6d5640;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 500px;
   width: 100%;
   margin-bottom: 5px;
 }

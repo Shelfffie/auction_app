@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./../../styles/valid-forms.css";
+import "../../../styles/valid-forms.css";
 
 function LogInForm() {
   const [emailValue, setEmailValue] = useState("");
@@ -51,7 +51,7 @@ function LogInForm() {
       <Link to="/">
         <p className="donut-on">DonutON</p>
       </Link>
-      <form className="block-for-registation" method="POST">
+      <form className="block-for-sign-up" method="POST">
         <label htmlFor="email">Введіть ваш email-адрес</label>
         <input
           type="email"
