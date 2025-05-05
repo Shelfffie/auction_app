@@ -1,5 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import "../../styles/header.css";
 
 function Header() {
@@ -33,12 +35,16 @@ function Header() {
   return (
     <header className="header">
       <div className="donut-on">
-        <a href="">DonutON</a>
+        <Link to="/">
+          <p>DonutON</p>
+        </Link>
       </div>
       <nav className="header-nav">
-        <a href="" className="header-item">
-          ПРО <br /> АУКЦІОНИ
-        </a>
+        <p className="header-item">
+          <HashLink smooth to="/#about-auctions">
+            ПРО <br /> АУКЦІОНИ
+          </HashLink>
+        </p>
         <a href="" className="header-item">
           ПЕРЕГЛЯНУТИ <br />
           ЛОТИ

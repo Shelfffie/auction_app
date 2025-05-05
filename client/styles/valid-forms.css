@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #6e8566;
   width: 100%;
 }
@@ -12,7 +12,7 @@
   position: relative;
   display: flex;
   margin-right: 60px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   color: #fff2dd;
   font-size: 64px;
 }
@@ -23,9 +23,9 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  min-height: 500px;
+  min-height: 450px;
   width: 100%;
-  margin-bottom: px;
+  margin-bottom: 5px;
 }
 
 label {
@@ -53,6 +53,8 @@ input.invalid {
 }
 
 .fake-pass {
+  height: 0;
+  width: 0;
   display: none;
 }
 
@@ -95,4 +97,11 @@ input.invalid {
   text-decoration: underline rgb(212, 192, 156);
   color: rgb(212, 192, 156);
   transition: all 0.3s ease;
+}
+
+.bottom-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0 20px 0px;
 }

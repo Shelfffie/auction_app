@@ -3,7 +3,7 @@ import "../../styles/styles.css";
 
 function AboutAuctions() {
   return (
-    <section className="about-auctions">
+    <section className="about-auctions" id="about-auctions">
       <img src="./../../pics/two-hands.png" alt="" className="two-hands-png" />
       <p className="about-title">Про аукціони</p>
       <p className="about-text-brown">1. Створення</p>

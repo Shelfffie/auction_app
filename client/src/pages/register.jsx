@@ -1,7 +1,7 @@
 import { useState } from "react";
-import SignUpForm from "./components/register-file";
+import SignUpForm from "./../components/register-file";
 
-function App() {
+function SignUp() {
   const [count, setCount] = useState(0);
 
   return (
@@ -10,3 +10,5 @@ function App() {
     </>
   );
 }
+
+export default SignUp;

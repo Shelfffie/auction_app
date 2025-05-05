@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./../../styles/valid-forms.css";
 
 function LogInForm() {
@@ -47,11 +48,11 @@ function LogInForm() {
 
   return (
     <div className="all-form">
-      <a href="" className="donut-on">
-        DonutON
-      </a>
+      <Link to="/">
+        <p className="donut-on">DonutON</p>
+      </Link>
       <form className="block-for-registation" method="POST">
-        <label for="email">Введіть ваш email-адрес</label>
+        <label htmlFor="email">Введіть ваш email-адрес</label>
         <input
           type="email"
           id="email"
@@ -65,7 +66,7 @@ function LogInForm() {
         />
         <p className="validation-message">{emailMessage}</p>
 
-        <label for="new-password">Введіть пароль</label>
+        <label htmlFor="new-password">Введіть пароль</label>
         <input
           id="new-password"
           name="user-new-pas"
@@ -78,14 +79,14 @@ function LogInForm() {
           className={`input ${passwordStatus}`}
           required
         />
-        <button type="submit" className="sign-up-button  log-in-margin">
+        <button type="submit" className="sign-up-button log-in-margin">
           Увійти
         </button>
       </form>
       <label>Не маєте облікового запису?</label>
-      <a href="" className="Log-sign-in">
-        Зареєструватися
-      </a>
+      <Link to="/sign-up">
+        <p className="Log-sign-in">Зареєструватися</p>
+      </Link>
     </div>
   );
 }

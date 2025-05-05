@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./../../styles/valid-forms.css";
+import { Link } from "react-router-dom";
 
 const SignUpForm = () => {
   const [emailValue, setEmailValue] = useState("");
@@ -73,15 +74,15 @@ const SignUpForm = () => {
 
   return (
     <div className="all-form">
-      <a href="" className="donut-on">
-        DonutON
-      </a>
+      <Link to="/">
+        <p className="donut-on">DonutON</p>
+      </Link>
       <form
         className="block-for-registation"
         onSubmit={handleSubmit}
         method="POST"
       >
-        <label for="email">Введіть ваш email-адрес</label>
+        <label htmlFor="email">Введіть ваш email-адрес</label>
         <input
           type="email"
           id="email"
@@ -95,7 +96,7 @@ const SignUpForm = () => {
         />
         <p className="validation-message">{emailMessage}</p>
 
-        <label for="new-password">Введіть пароль</label>
+        <label htmlFor="new-password">Введіть пароль</label>
         <input
           id="new-password"
           name="user-new-pas"
@@ -109,7 +110,7 @@ const SignUpForm = () => {
           required
         />
         <p className="validation-message">{passwordMessage}</p>
-        <label for="confirm-user-pas">Повторіть введений пароль</label>
+        <label htmlFor="confirm-user-pas">Повторіть введений пароль</label>
         <input
           type="password"
           name="password"
@@ -135,9 +136,9 @@ const SignUpForm = () => {
         </button>
       </form>
       <label>Вже маєте обліковий запис?</label>
-      <a href="" className="Log-sign-in">
-        Увійти
-      </a>
+      <Link to="/log-in">
+        <p className="Log-sign-in">Увійти</p>
+      </Link>
     </div>
   );
 };
