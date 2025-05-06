@@ -7,8 +7,6 @@ import AboutAuctions from "./../components/about-auctions.jsx";
 import FAQ from "./../components/FAQ-container.jsx";
 
 function Home() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <Header />

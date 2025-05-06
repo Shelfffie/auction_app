@@ -17,7 +17,7 @@ function ProfileButtons() {
   ];
 
   const LogOut = () => {
-    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
     navigate("/");
   };

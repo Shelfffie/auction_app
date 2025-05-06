@@ -9,7 +9,7 @@ const Layout = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("token");
     setIsLoggedIn(!!userId);
 
     const timer = setTimeout(() => {

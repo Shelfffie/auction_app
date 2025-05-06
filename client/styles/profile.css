@@ -6,7 +6,7 @@
   background-color: #fff2dd;
   color: #3d2712;
   width: 100%;
-  height: 625px;
+  min-height: 625px;
 }
 
 .profile-icon {

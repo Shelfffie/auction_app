@@ -71,7 +71,7 @@ function LogInForm() {
         alert("Вхід успішний!");
         setEmailValue("");
         setPasswordValue("");
-        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("token", data.token);
         navigate("/");
       } else {
         console.log("Response error data:", data);
