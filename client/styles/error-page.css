@@ -1,0 +1,25 @@
+.error-div {
+  border: none;
+  box-sizing: border-box;
+  height: 100vh;
+  background-color: #6e8566;
+}
+
+.error-div * {
+  color: #fff2dd;
+  font-size: 30px;
+  margin: 0;
+  padding: 30px;
+}
+
+.error-div button {
+  margin: 30px;
+  border-radius: 5px;
+  border: none;
+  background-color: #6d5640;
+}
+
+.error-div button:hover {
+  background-color: #4a3b2d;
+  transition: all 0.3s ease;
+}

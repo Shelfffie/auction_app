@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
+import ProtectedRoute from "./protected-route";
+import SuccessSignUp from "../components/sign-up-and-log-in/sing-up-successful";
 import Layout from "../Layout";
 import ErrorPage from "../pages/error-page";
 import Home from "../pages/Home";
@@ -22,8 +24,17 @@ export const router = createBrowserRouter([
         element: <LogIn />,
       },
       {
-        path: "profile",
-        element: <Profile />,
+        path: "success-sign-up",
+        element: <SuccessSignUp />,
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+        ],
       },
     ],
   },

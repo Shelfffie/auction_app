@@ -24,4 +24,26 @@ const registerUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser };
+const loginUser = async (req, res) => {
+  console.log("Login request received:", req.body);
+  const { email, password } = req.body;
+
+  try {
+    const user = await Users.findOne({ where: { email } });
+    if (!user) {
+      return res.status(401).json({ message: "Невірний email" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password_hash);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Невірний пароль" });
+    }
+
+    res.status(200).json({ message: "Вхід успішний", userId: user.id });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+module.exports = { registerUser, loginUser };

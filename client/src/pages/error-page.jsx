@@ -1,16 +1,19 @@
 import React from "react";
-import { useRouteError } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "../../styles/error-page.css";
 
 const ErrorPage = () => {
-  const error = useRouteError();
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   return (
-    <div>
+    <div className="error-div">
       <h1>Упс!</h1>
-      <p>Щось пішло не так.</p>
-      <p>
-        <i>{error.statusText || error.message}</i>
-      </p>
+      <p>Такої сторінки не існує!</p>
+      <button onClick={goBack}>Повернутись</button>
     </div>
   );
 };

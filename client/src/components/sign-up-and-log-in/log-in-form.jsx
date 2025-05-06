@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../../styles/valid-forms.css";
+import { useNavigate } from "react-router-dom";
 
 function LogInForm() {
   const [emailValue, setEmailValue] = useState("");
@@ -46,6 +47,42 @@ function LogInForm() {
     }
   };
 
+  const navigate = useNavigate();
+
+  const handleLogIn = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("Sending login request to the server...");
+      const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: emailValue,
+          password: passwordValue,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Server response status:", response.status);
+
+      if (response.ok) {
+        alert("Вхід успішний!");
+        setEmailValue("");
+        setPasswordValue("");
+        localStorage.setItem("userId", data.userId);
+        navigate("/");
+      } else {
+        console.log("Response error data:", data);
+        alert(data.message || "Помилка входу");
+      }
+    } catch (error) {
+      console.error("Login error: ", error);
+      alert("щОСЬ НЕ ТАК!!!!!!");
+    }
+  };
+
   return (
     <div className="all-form">
       <Link to="/">
@@ -79,7 +116,11 @@ function LogInForm() {
           className={`input ${passwordStatus}`}
           required
         />
-        <button type="submit" className="sign-up-button log-in-margin">
+        <button
+          type="submit"
+          className="sign-up-button log-in-margin"
+          onClick={handleLogIn}
+        >
           Увійти
         </button>
       </form>

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import "./../../../styles/profile.css";
 
 function ProfileButtons() {
+  const navigate = useNavigate();
+  const { setIsLoggedIn } = useOutletContext();
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const buttons = [
@@ -12,6 +15,12 @@ function ProfileButtons() {
     { label: "Активні лоти", content: "Тимчасовий текст" },
     { label: "Завершені лоти", content: "Тимчасовий текст" },
   ];
+
+  const LogOut = () => {
+    localStorage.removeItem("userId");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
   return (
     <div className="div-for-profile-buttons">
@@ -28,7 +37,9 @@ function ProfileButtons() {
           )}
         </div>
       ))}
-      <button className="menu-button">Видалити обліковий запис</button>
+      <button className="menu-button" onClick={LogOut}>
+        Вийти з облікового запису
+      </button>
     </div>
   );
 }

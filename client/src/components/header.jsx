@@ -1,10 +1,11 @@
 import React from "react";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useOutletContext } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import "../../styles/header.css";
 
 function Header() {
+  const { isLoggedIn } = useOutletContext();
   useEffect(() => {
     const headerNav = document.querySelector("header");
     let Scroll = window.pageYOffset || document.documentElement.scrollTop;
@@ -49,13 +50,21 @@ function Header() {
           ПЕРЕГЛЯНУТИ <br />
           ЛОТИ
         </a>
-        <a href="" className="header-item">
-          ВИСТАВИТИ
-          <br /> ЛОТ
-        </a>
-        <a href="" className="log-in-button">
-          Авторизуватися
-        </a>
+        {isLoggedIn && (
+          <a href="" className="header-item">
+            ВИСТАВИТИ
+            <br /> ЛОТ
+          </a>
+        )}
+        {isLoggedIn ? (
+          <Link to="/profile">
+            <p className="log-in-button">Профіль</p>
+          </Link>
+        ) : (
+          <Link to="/log-in">
+            <p className="log-in-button">Авторизуватися</p>
+          </Link>
+        )}
       </nav>
     </header>
   );

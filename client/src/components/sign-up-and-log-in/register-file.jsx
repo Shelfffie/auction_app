@@ -64,14 +64,13 @@ const SignUpForm = () => {
         console.log("Response from server:", data);
 
         if (response.ok) {
-          alert("Реєстрація успішна!");
           setEmailValue("");
           setPasswordValue("");
           setRepeatPasswordValue("");
           setNameValue("");
           setSurnameValue("");
 
-          navigate("/");
+          navigate("/success-sign-up");
         } else {
           alert(data.message || "Authenfication error");
         }
