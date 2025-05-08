@@ -73,6 +73,7 @@ function LogInForm() {
         setPasswordValue("");
         localStorage.setItem("token", data.token);
         navigate("/");
+        window.location.reload();
       } else {
         console.log("Response error data:", data);
         alert(data.message || "Помилка входу");

@@ -6,7 +6,7 @@
   background-color: #fff2dd;
   color: #3d2712;
   width: 100%;
-  min-height: 625px;
+  min-height: 703px;
 }
 
 .profile-icon {
@@ -85,4 +85,12 @@
 
 .menu-item:hover .hover-block {
   background-color: #fff2dd;
+}
+
+.editing-input {
+  height: 30px;
+  border-radius: 5px;
+  color: #3d2712;
+  background-color: rgb(212, 192, 156);
+  border: none;
 }

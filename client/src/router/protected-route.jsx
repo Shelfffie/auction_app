@@ -1,14 +1,26 @@
 import { Navigate, Outlet, useOutletContext } from "react-router-dom";
+import { useAuth } from "../hooks/authContext";
 
-function ProtectedRoute({ redirectPath = "/log-in" }) {
-  const layoutContext = useOutletContext();
-  const isLoggedIn = !!localStorage.getItem("token");
+function ProtectedRoute({ allowedRoles = [] }) {
+  const { user, isLoading } = useAuth();
 
-  if (!isLoggedIn) {
-    return <Navigate to={redirectPath} replace />;
+  const hasPermission =
+    allowedRoles.length === 0 || allowedRoles.includes(user?.user_role);
+  const isLoggedIn = !!user;
+
+  if (isLoading) {
+    return <div>Завантаження...</div>;
   }
 
-  return <Outlet context={layoutContext} />;
+  if (!isLoggedIn) {
+    return <Navigate to="/log-in" replace />;
+  }
+
+  if (!hasPermission) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <Outlet />;
 }
 
 export default ProtectedRoute;

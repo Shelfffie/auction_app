@@ -3,10 +3,10 @@ import "./../../../styles/profile.css";
 
 function ProfilePage() {
   const [userData, setUserData] = useState(null);
-  const [isEditing, setIsEditing] = useState(false); // Додаємо стан для редагування
+  const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({
-    name: "",
-    email: "",
+    firstname: "",
+    lastname: "",
   });
 
   useEffect(() => {
@@ -20,9 +20,24 @@ function ProfilePage() {
         if (!res.ok) throw new Error("Користувача не знайдено");
         return res.json();
       })
-      .then((data) => setUserData(data))
+      .then((data) => {
+        setUserData(data);
+        const [firstname, lastname] = data.name
+          ? data.name.split(" ")
+          : ["", ""];
+        setEditedData({
+          firstname,
+          lastname,
+        });
+      })
       .catch((err) => console.error("Помилка завантаження профілю:", err));
   }, []);
+
+  const roleLabels = {
+    user: "Учасник",
+    organizer: "Аукціоніст",
+    admin: "Адміністратор",
+  };
 
   const editChange = (e) => {
     setEditedData({ ...editedData, [e.target.name]: e.target.value });
@@ -30,13 +45,17 @@ function ProfilePage() {
 
   const SaveChanges = async () => {
     try {
+      const updatedUser = {
+        name: `${editedData.firstname} ${editedData.lastname}`.trim(),
+      };
+
       const response = await fetch("http://localhost:3000/api/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
-        body: JSON.stringify(editedData),
+        body: JSON.stringify(updatedUser),
       });
 
       if (!response.ok) {
@@ -49,9 +68,11 @@ function ProfilePage() {
       console.log("Помилка збереження профілю:", error);
     }
   };
+
   if (!userData) {
     return <div>Завантаження профілю...</div>;
   }
+
   const [firstname, lastname] = userData?.name
     ? userData.name.split(" ")
     : ["", ""];
@@ -65,9 +86,10 @@ function ProfilePage() {
         {isEditing ? (
           <input
             type="text"
-            name="name"
-            value={editedData.name}
+            name="firstname"
+            value={editedData.firstname}
             onChange={editChange}
+            className="editing-input"
           />
         ) : (
           <p className="personal-info">{firstname || "Ім'я"}</p>
@@ -76,9 +98,10 @@ function ProfilePage() {
         {isEditing ? (
           <input
             type="text"
-            name="name"
-            value={editedData.name}
+            name="lastname"
+            value={editedData.lastname}
             onChange={editChange}
+            className="editing-input"
           />
         ) : (
           <p className="personal-info">{lastname || "Прізвище"}</p>
@@ -95,10 +118,16 @@ function ProfilePage() {
               })
             : "Дата"}
         </p>
+        <p>Роль користувача:</p>
+        <p className="personal-info">
+          {roleLabels[userData?.user_role] || "Користувач"}
+        </p>
       </div>
       <div className="edit-block">
         {isEditing ? (
-          <button onClick={SaveChanges}>Зберегти зміни</button>
+          <p onClick={SaveChanges} className="edit-profile big-text">
+            Зберегти зміни
+          </p>
         ) : (
           <p
             className="edit-profile big-text"

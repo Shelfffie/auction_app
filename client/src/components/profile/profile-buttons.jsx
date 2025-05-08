@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../hooks/authContext";
+import { useNavigate, Link, useOutletContext } from "react-router-dom";
 import "./../../../styles/profile.css";
 
 function ProfileButtons() {
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useOutletContext();
+  const { user, logOut } = useAuth();
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const buttons = [
@@ -13,12 +14,10 @@ function ProfileButtons() {
       content: "Тимчасовий текст",
     },
     { label: "Активні лоти", content: "Тимчасовий текст" },
-    { label: "Завершені лоти", content: "Тимчасовий текст" },
   ];
 
-  const LogOut = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
+  const handleLogout = () => {
+    logOut();
     navigate("/");
   };
 
@@ -37,7 +36,12 @@ function ProfileButtons() {
           )}
         </div>
       ))}
-      <button className="menu-button" onClick={LogOut}>
+      {(user?.user_role === "admin" || user?.user_role === "organizer") && (
+        <Link to="/lot/create">
+          <button className="menu-button">Створити лот</button>
+        </Link>
+      )}
+      <button className="menu-button" onClick={handleLogout}>
         Вийти з облікового запису
       </button>
     </div>

@@ -1,11 +1,19 @@
 import React from "react";
+import { useAuth } from "../hooks/authContext";
 import { useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import "../../styles/header.css";
 
 function Header() {
-  const { isLoggedIn } = useOutletContext();
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div className="loading">Завантаження....</div>;
+  }
+
+  const isLoggedIn = !!user;
+  const [userRole, setUserRole] = useState(null);
   useEffect(() => {
     const headerNav = document.querySelector("header");
     let Scroll = window.pageYOffset || document.documentElement.scrollTop;
@@ -33,6 +41,22 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isLoggedIn) return;
+
+    fetch(`http://localhost:3000/api/profile`, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserRole(data.user_role);
+      })
+      .catch((err) => console.error("Помилка завантаження ролі:", err));
+  }, [isLoggedIn]);
+
   return (
     <header className="header">
       <div className="donut-on">
@@ -50,11 +74,13 @@ function Header() {
           ПЕРЕГЛЯНУТИ <br />
           ЛОТИ
         </a>
-        {isLoggedIn && (
-          <a href="" className="header-item">
-            ВИСТАВИТИ
-            <br /> ЛОТ
-          </a>
+        {isLoggedIn && (userRole === "organizer" || userRole === "admin") && (
+          <p className="header-item">
+            <Link to="/lot/create">
+              СТВОРИТИ
+              <br /> ЛОТ
+            </Link>
+          </p>
         )}
         {isLoggedIn ? (
           <Link to="/profile">

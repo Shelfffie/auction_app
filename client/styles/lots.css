@@ -1,0 +1,126 @@
+body {
+  box-sizing: border-box;
+  border: none;
+  margin: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  padding-top: 164px;
+  margin: 0;
+  background-color: #6e8566;
+  min-height: 1500px;
+}
+
+.create-lot-text {
+  color: #fff2dd;
+  font-size: 65px;
+  margin: 0;
+}
+
+.phono-name {
+  color: #554332;
+  font-size: 25px;
+  display: flex;
+  gap: 50px;
+  margin: 50px;
+}
+
+.photo-container {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 500px;
+  width: 400px;
+  border-radius: 5px;
+  background-color: #fff2dd;
+}
+
+.lot-image {
+  border: 5px solid #6e8566;
+  border-radius: 5px;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.button-for-img {
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+  background-color: #6e8566;
+}
+
+.button-for-img:hover {
+  background-color: #50614b;
+  transition: background-color 0.2s ease;
+}
+
+.name-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 500px;
+  width: 700px;
+  border-radius: 5px;
+  background-color: #fff2dd;
+}
+
+.name-description p {
+  margin-right: 300px;
+}
+
+.input-name-des {
+  height: 40px;
+  width: 600px;
+  border-radius: 5px;
+  color: #554332;
+  background-color: rgb(212, 192, 156);
+  border: none;
+}
+
+.input-name-des::placeholder {
+  color: #554332;
+}
+
+.textarea {
+  height: 200px;
+}
+
+.block-for-time-etc {
+  display: flex;
+  flex-direction: row;
+  padding: 50px;
+  color: #554332;
+  font-size: 25px;
+  min-height: 500px;
+  border-radius: 5px;
+  background-color: #fff2dd;
+  width: 1150px;
+}
+
+.container-for-button {
+  padding-top: 300px;
+  padding-left: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.create-a-lot-button {
+  border-radius: 5px;
+  border: none;
+  background-color: #6e8566;
+  color: #fff2dd;
+  height: 60px;
+  width: 300px;
+  font-size: 25px;
+}
+
+.create-a-lot-button:hover {
+  background-color: #50614b;
+  transition: all 0.3s ease;
+}
