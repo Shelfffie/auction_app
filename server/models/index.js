@@ -1,0 +1,18 @@
+const { Users } = require("./users");
+const { Lots } = require("./lots");
+const { Bids } = require("./bids");
+
+Users.hasMany(Lots, { foreignKey: "creator_id" });
+Lots.belongsTo(Users, { foreignKey: "creator_id", as: "creator" });
+
+Lots.hasMany(Bids, { foreignKey: "auction_id" });
+Bids.belongsTo(Lots, { foreignKey: "auction_id", as: "lot" });
+
+Users.hasMany(Bids, { foreignKey: "user_id" });
+Bids.belongsTo(Users, { foreignKey: "user_id", as: "creator" });
+
+module.exports = {
+  Users,
+  Lots,
+  Bids,
+};

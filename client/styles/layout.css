@@ -1,3 +1,7 @@
+*::first-letter {
+  text-transform: uppercase;
+}
+
 body {
   border: none;
   padding: 0;

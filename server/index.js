@@ -4,6 +4,7 @@ const authRoutes = require("./routes/routes");
 const verifyToken = require("./middlewares/authMiddleware");
 const path = require("path");
 const app = express();
+require("./models/cron/updateLotStatus");
 
 app.use(cors());
 app.use(express.json());

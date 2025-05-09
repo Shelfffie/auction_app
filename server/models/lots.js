@@ -38,7 +38,7 @@ const Lots = sequelize.define(
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("active", "ended", "cancelled"),
+      type: DataTypes.ENUM("on_hold", "active", "ended", "cancelled"),
       allowNull: true,
       defaultValue: "active",
     },

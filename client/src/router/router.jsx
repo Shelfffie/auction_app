@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
         element: <AnotherUserProfile />,
       },
       {
-        path: "lot",
+        path: "lot/:id",
         element: <LotId />,
       },
       {

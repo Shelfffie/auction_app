@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { Users } = require("../models/users");
+const { Users } = require("../models");
 
 const { registerUser, loginUser } = require("../controllers/authControllers");
 const { profileContr } = require("../controllers/profileControllers.js");
 const verifyToken = require("../middlewares/authMiddleware");
-const { LotContrl } = require("../controllers/lotsController");
+const { LotContrl, IdLots } = require("../controllers/lotsController");
 const { getUserProfile } = require("../controllers/anotherUserControl");
 const upload = require("../middlewares/uploadMiddlewares");
 
@@ -42,5 +42,7 @@ router.put("/profile", verifyToken, (req, res) => {
 router.get("/user/:id", getUserProfile);
 
 router.post("/lots/create", verifyToken, upload.single("image"), LotContrl);
+
+router.get("/lot/:id", IdLots);
 
 module.exports = router;

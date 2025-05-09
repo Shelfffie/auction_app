@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "../hooks/authContext";
 import { useEffect, useState } from "react";
-import { Link, useOutletContext } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import "../../styles/header.css";
 
