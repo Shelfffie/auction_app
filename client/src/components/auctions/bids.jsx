@@ -3,8 +3,9 @@ import { useAuth } from "../../hooks/authContext";
 import { useParams } from "react-router-dom";
 
 import "../../../styles/lot-id.css";
+import AuctionControl from "./control-panel";
 
-const BidsContainer = ({ creatorId }) => {
+const BidsContainer = ({ creatorId, auctionStatus }) => {
   const { user } = useAuth();
   const [value, setValue] = useState(5);
 
@@ -19,48 +20,58 @@ const BidsContainer = ({ creatorId }) => {
   }, []);
 
   return (
-    <div className="container-for-bids">
-      <p>Історія ставок</p>
-      <div className="scroll-bids-list" ref={scrollBoxRef}>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-        <p>контент</p>
-      </div>
-      {user?.id && user.id !== creatorId && (
-        <div className="make-bid-container">
-          <p>Введіть ставку:</p>
-          <div>
-            <button
-              onClick={decrease}
-              disabled={value <= 5}
-              className="plus-minus-button"
-            >
-              −
-            </button>
-            <input
-              type="number"
-              value={value}
-              className="set-bid-value"
-              onChange={(e) => setValue(Number(e.target.value))}
-            />
-            <button onClick={increase} className="plus-minus-button">
-              +
-            </button>
-          </div>
-          <button className="make-bid">Зробити ставку</button>
+    <>
+      {auctionStatus === "pending" && (
+        <div className="container-for-bids">
+          <p>Аукціон ще не почався.</p>
         </div>
       )}
-    </div>
+      {auctionStatus === "active" ||
+        (auctionStatus === "ended" && (
+          <div className="container-for-bids">
+            <p>Історія ставок</p>
+            <div className="scroll-bids-list" ref={scrollBoxRef}>
+              <p>контент</p>
+              <p>контент</p>
+            </div>
+            {user?.id && user.id !== creatorId && auctionStatus !== "ended" && (
+              <div className="make-bid-container">
+                {auctionStatus === "finished" ? (
+                  <p>Аукціон вже завершений.</p>
+                ) : (
+                  <>
+                    <p>Введіть ставку:</p>
+                    <div>
+                      <button
+                        onClick={decrease}
+                        disabled={value <= 5}
+                        className="plus-minus-button"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        value={value}
+                        className="set-bid-value"
+                        onChange={(e) => setValue(Number(e.target.value))}
+                      />
+                      <button onClick={increase} className="plus-minus-button">
+                        +
+                      </button>
+                    </div>
+                    <button className="make-bid">Зробити ставку</button>
+                  </>
+                )}
+              </div>
+            )}
+            {auctionStatus === "cancelled" && (
+              <div className="container-for-bids">
+                <p>Аукціон відмінений.</p>
+              </div>
+            )}
+          </div>
+        ))}
+    </>
   );
 };
 

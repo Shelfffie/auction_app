@@ -36,6 +36,14 @@
   margin-top: 0px;
   margin-bottom: 50px;
 }
+.editing-lot-input {
+  height: 50px;
+  width: 400px;
+  border-radius: 5px;
+  color: #3d2712;
+  background-color: rgb(212, 192, 156);
+  border: none;
+}
 
 .scroll-bids-list {
   border-radius: 5px;
@@ -156,6 +164,11 @@
   border-radius: 5px;
   padding: 10px;
   height: 400px;
+}
+
+.textarea {
+  width: 580px;
+  height: 380px;
 }
 
 .lot-info {

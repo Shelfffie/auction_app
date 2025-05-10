@@ -9,7 +9,7 @@ import LogIn from "../pages/log-in-page";
 import Profile from "../pages/personal-office";
 import SignUp from "../pages/register";
 import CreateLotPage from "../pages/auctions/create-lot";
-import LotId from "../components/auctions/lot-id";
+import LotPage from "../pages/lot-id";
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "lot/:id",
-        element: <LotId />,
+        element: <LotPage />,
       },
       {
         element: <ProtectedRoute />,

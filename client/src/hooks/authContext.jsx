@@ -12,14 +12,15 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       const fetchDataUser = async (req, res) => {
         try {
-          const res = await fetch(`http://localhost:3000/api/profile`, {
+          const response = await fetch(`http://localhost:3000/api/profile`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-          if (!res.ok) throw new Error("Користувача не знайдено");
-          const data = await res.json();
+          if (!response.ok) throw new Error("Користувача не знайдено");
+          const data = await response.json();
           setUser(data);
+          console.log("User data:", data);
         } catch (error) {
           console.error("Помилка авторизації:", error);
           setUser(null);

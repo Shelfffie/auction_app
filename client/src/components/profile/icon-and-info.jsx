@@ -96,8 +96,9 @@ function ProfilePage() {
         )}
         <p>Прізвище</p>
         {isEditing ? (
-          <input
-            type="text"
+          <textarea
+            rows="5"
+            cols="40"
             name="lastname"
             value={editedData.lastname}
             onChange={editChange}
