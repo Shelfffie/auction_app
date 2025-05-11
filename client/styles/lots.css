@@ -21,6 +21,22 @@ body {
   margin: 0;
 }
 
+.go-back-button {
+  color: #fff2dd;
+  font-size: 30px;
+  height: 80px;
+  width: 300px;
+  margin: 30px;
+  border-radius: 5px;
+  border: none;
+  background-color: #6d5640;
+}
+
+.go-back-button:hover {
+  background-color: #4a3b2d;
+  transition: all 0.3s ease;
+}
+
 .phono-name {
   color: #554332;
   font-size: 25px;

@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
           if (!response.ok) throw new Error("Користувача не знайдено");
           const data = await response.json();
           setUser(data);
-          console.log("User data:", data);
         } catch (error) {
           console.error("Помилка авторизації:", error);
           setUser(null);

@@ -17,6 +17,7 @@
   border: 5px solid #6e8566;
   border-radius: 5px;
   height: 600px;
+  max-width: 690px;
 }
 
 .container-for-bids {
@@ -55,11 +56,16 @@
   box-shadow: inset 10px 10px 10px rgba(0, 0, 0, 0.2);
 }
 
-.scroll-bids-list p {
-  height: 70px;
+.scroll-bids-list div {
+  font-size: 20px;
+  min-height: 70px;
   margin: 0;
   border: 3px solid #554332;
   color: #fff2dd;
+}
+
+.data-bid {
+  font-size: 15px;
 }
 
 .scroll-bids-list::-webkit-scrollbar {

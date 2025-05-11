@@ -39,6 +39,9 @@ const LotId = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [lotStatus, setLotStatus] = useState(null);
 
+  const goBack = () => {
+    navigate(-1);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -150,18 +153,20 @@ const LotId = () => {
     if (!confirm) return;
 
     try {
+      const formData = new FormData();
+      formData.append("title", editedData.title);
+      formData.append("description", editedData.description);
+      formData.append("start_time", formatInputToISO(editedData.startTime));
+      formData.append("end_time", formatInputToISO(editedData.endTime));
+      formData.append("start_price", editedData.startedPrice);
+
+      if (editedData.image) {
+        formData.append("image", editedData.image);
+      }
+
       const response = await fetch(`${LINK}${id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: editedData.title,
-          description: editedData.description,
-          start_time: formatInputToISO(editedData.startTime),
-          end_time: formatInputToISO(editedData.endTime),
-          start_price: editedData.startedPrice,
-        }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -203,7 +208,10 @@ const LotId = () => {
   if (error) {
     return (
       <div className="page-container">
-        <p className="big-text">Такого лоту не існує</p>
+        <p className="create-lot-text">Такого лоту не існує</p>
+        <button className="go-back-button" onClick={goBack}>
+          Повернутись
+        </button>
       </div>
     );
   }
@@ -234,6 +242,16 @@ const LotId = () => {
             alt="фото-лот"
             className="image-lot"
           />
+          {isEditing && (
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={(e) =>
+                setEditedData({ ...editedData, image: e.target.files[0] })
+              }
+            />
+          )}
           {isEditing ? (
             <input
               type="text"
@@ -249,6 +267,8 @@ const LotId = () => {
         <BidsContainer
           creatorId={lotData?.creator?.userId}
           auctionStatus={lotData?.status}
+          lotId={id}
+          startedPrice={lotData?.start_price}
         />
       </div>
       <div className="description-lot">

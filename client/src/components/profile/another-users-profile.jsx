@@ -1,11 +1,16 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./../../../styles/profile.css";
 
 function UserProfilePage() {
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +33,9 @@ function UserProfilePage() {
       <div className="profile-info">
         <div className="general-information">
           <p className="big-text">Такого користувача не існує</p>
+          <button onClick={goBack} className="go-back-button">
+            Повернутись
+          </button>
         </div>
       </div>
     );

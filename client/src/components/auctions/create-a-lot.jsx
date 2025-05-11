@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../../styles/lots.css";
 import defaulImage from "../../../pics/null-donut.png";
 
@@ -11,6 +11,7 @@ const CreateLot = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [startPrice, setStartPrice] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +31,10 @@ const CreateLot = () => {
       return;
     }
 
+    const confirm = window.confirm("Cтворити лот?");
+
+    if (!confirm) return;
+
     const formData = new FormData();
     formData.append("image", imageFile);
     formData.append("title", title);
@@ -48,12 +53,14 @@ const CreateLot = () => {
       });
 
       const data = await response.json();
-
+      console.log("Відповідь сервера:", data);
       if (!response.ok) {
         throw new Error(data.message || "Не вдалося створити лот");
       }
 
       alert("Лот успішно створено!");
+      const lotId = data.id;
+      navigate(`/lot/${lotId}`);
     } catch (error) {
       console.error("Помила створення:", error);
     }
