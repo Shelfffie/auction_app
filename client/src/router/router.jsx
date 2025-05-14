@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import AnotherUserProfile from "../pages/user.profile";
 import ProtectedRoute from "./protected-route";
+import RedirectIfAuth from "./redirectIfAuth";
 import SuccessSignUp from "../components/sign-up-and-log-in/sing-up-successful";
 import Layout from "../Layout";
 import ErrorPage from "../pages/error-page";
@@ -14,7 +15,7 @@ import ShowLotPage from "../pages/auctions/show-auction";
 import EndedLotsPage from "../pages/auctions/ended-lots-list";
 import ShowLotByIdPage from "../pages/auctions/showLotsByIdPage";
 import ShowLotsByBidsPage from "../pages/auctions/showLotsByBids";
-import UserControl from "../pages/admin/control-users";
+import AdminPage from "../pages/admin/control-page";
 
 export const router = createBrowserRouter([
   {
@@ -25,11 +26,19 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       {
         path: "sign-up",
-        element: <SignUp />,
+        element: (
+          <RedirectIfAuth>
+            <SignUp />
+          </RedirectIfAuth>
+        ),
       },
       {
         path: "log-in",
-        element: <LogIn />,
+        element: (
+          <RedirectIfAuth>
+            <LogIn />
+          </RedirectIfAuth>
+        ),
       },
       {
         path: "success-sign-up",
@@ -76,7 +85,7 @@ export const router = createBrowserRouter([
           },
           {
             element: <ProtectedRoute allowedRoles={["admin"]} />,
-            children: [{ path: "admin-panel", element: <UserControl /> }],
+            children: [{ path: "admin-panel", element: <AdminPage /> }],
           },
         ],
       },

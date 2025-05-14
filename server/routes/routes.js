@@ -39,28 +39,32 @@ const {
   editlotControl,
   deletlotControl,
 } = require("../controllers/admin/lotControl");
-
 const upload = require("../middlewares/uploadMiddlewares");
 const verifyAdmin = require("../middlewares/requireAdmin");
 
 router.get("/admin/controller/user/:id", verifyToken, verifyAdmin, GetUserInfo);
 router.put(
-  "/admin/controller/lots/:id",
+  "/admin/controller/user/:id",
   verifyToken,
   verifyAdmin,
   editUserControl
 );
 router.delete(
-  "/admin/controller/user",
+  "/admin/controller/user/:id",
   verifyToken,
   verifyAdmin,
   deletUserControl
 );
 
-router.get("/admin/controller/user", verifyToken, verifyAdmin, GetlotInfo);
-router.put("/admin/controller/user", verifyToken, verifyAdmin, editlotControl);
+router.get("/admin/controller/lots/:id", verifyToken, verifyAdmin, GetlotInfo);
+router.put(
+  "/admin/controller/lots/:id",
+  verifyToken,
+  verifyAdmin,
+  editlotControl
+);
 router.delete(
-  "/admin/controller/user",
+  "/admin/controller/lots/:id",
   verifyToken,
   verifyAdmin,
   deletlotControl

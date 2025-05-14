@@ -66,9 +66,9 @@ function CurrentLots() {
                 </div>
               </Link>
             ))}
-            <a href="" className="auctions-block-div">
-              Переглянути всі...
-            </a>
+            <Link to="lots">
+              <p className="auctions-block-div">Переглянути всі...</p>
+            </Link>
           </>
         )}
       </div>

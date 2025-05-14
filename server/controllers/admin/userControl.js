@@ -33,6 +33,7 @@ const GetUserInfo = async (req, res) => {
       role: user.role,
       status: user.status,
       created_at: user.created_at,
+      updated_at: user.updated_at,
       user_role: user.role,
       lots: user.Lots.map((lot) => ({
         id: lot.id,

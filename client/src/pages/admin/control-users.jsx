@@ -1,25 +1,37 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
 function UserControl() {
   const [searchId, setSearchId] = useState("");
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({
+    id: "",
+    name: "",
+    email: "",
+    role: "",
+    status: "",
+    created_at: "",
+    updated_at: "",
+    lots: [],
+  });
   const [notFound, setNotFound] = useState(false);
   const token = localStorage.getItem("token");
+
   useEffect(() => {
     if (searchId.trim() === "") {
-      setUserData(null);
+      setUserData({
+        id: "",
+        name: "",
+        email: "",
+        role: "",
+        status: "",
+        created_at: "",
+        updated_at: "",
+      });
       setNotFound(false);
       return;
     }
 
     const delayDebounce = setTimeout(() => {
       const fetchData = async () => {
-        if (searchId.trim() === "") {
-          setUserData(null);
-          setNotFound(false);
-        }
         try {
           const res = await fetch(
             `http://localhost:3000/api/admin/controller/user/${searchId}`,
@@ -34,19 +46,109 @@ function UserControl() {
           setUserData(data);
           setNotFound(false);
         } catch (error) {
-          setUserData(null);
+          setUserData({
+            id: "",
+            name: "",
+            email: "",
+            role: "",
+            status: "",
+            created_at: "",
+            updated_at: "",
+          });
           setNotFound(true);
         }
       };
 
       fetchData();
-    }, 1000);
+    }, 800);
 
     return () => clearTimeout(delayDebounce);
   }, [searchId]);
 
+  const handleChange = (e) => {
+    setUserData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleEdit = async () => {
+    if (!window.confirm("Редагувати?")) return;
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/admin/controller/user/${userData.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            name: userData.name,
+            email: userData.email,
+            role: userData.role,
+            status: userData.status,
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Не вдалося оновити користувача");
+      }
+
+      const updated = await res.json();
+      alert("Користувача оновлено");
+      setUserData((prev) => ({
+        ...prev,
+        ...updated,
+      }));
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm("Точно видалити користувача?")) return;
+
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/admin/controller/user/${userData.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) throw new Error("Не вдалося видалити користувача");
+
+      alert("Користувача видалено");
+      setUserData({
+        id: "",
+        name: "",
+        email: "",
+        role: "",
+        status: "",
+        created_at: "",
+        updated_at: "",
+      });
+      setSearchId("");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const dataFormat = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
+
   return (
-    <div style={{ color: "cream", margin: "50px" }}>
+    <div style={{ color: "bisque", margin: "50px" }}>
       <h1>КОРИСТУВАЧ</h1>
       <input
         type="text"
@@ -55,28 +157,95 @@ function UserControl() {
         onChange={(e) => setSearchId(e.target.value)}
       />
       {notFound && <p style={{ color: "red" }}>Такого користувача не існує</p>}
-      <ul
+
+      <div
         style={{
-          listStyle: "none",
+          marginTop: "20px",
           display: "flex",
           flexDirection: "column",
           gap: "10px",
         }}
       >
-        <li>ID: {userData?.id || ""}</li>
-        <li>Name: {userData?.name || ""}</li>
-        <li>Email: {userData?.email || ""}</li>
-        <li>Role: {userData?.role || ""}</li>
-        <li>Status: {userData?.status || ""}</li>
-        <li>Created at: {userData?.created_at || ""}</li>
-        <li>Updated at: {userData?.updated_at || ""}</li>
-      </ul>
-
-      <div style={{ marginTop: "50px" }}>
-        <button style={{ marginRight: "50px" }}>Редагувати користувача</button>
-        <button>Видалити користувача</button>
+        <label>
+          ID:
+          <input type="text" value={userData.id} disabled />
+        </label>
+        <label>
+          Name:
+          <input name="name" value={userData.name} onChange={handleChange} />
+        </label>
+        <label>
+          Email:
+          <input name="email" value={userData.email} onChange={handleChange} />
+        </label>
+        <label>
+          Role:
+          <select name="role" value={userData.role} onChange={handleChange}>
+            <option value="user">user</option>
+            <option value="organizer">organizer</option>
+            <option value="admin">admin</option>
+          </select>
+        </label>
+        <label>
+          Status:
+          <select name="status" value={userData.status} onChange={handleChange}>
+            <option value="active">active</option>
+            <option value="deleted">deleted</option>
+            <option value="banned">banned</option>
+          </select>
+        </label>
+        <label>
+          Created At:
+          <input
+            value={
+              userData.created_at
+                ? new Date(userData.created_at).toLocaleDateString(
+                    "uk-UA",
+                    dataFormat
+                  )
+                : ""
+            }
+            disabled
+          />
+        </label>
+        <label>
+          Updated At:
+          <input
+            value={
+              userData.updated_at
+                ? new Date(userData.updated_at).toLocaleDateString(
+                    "uk-UA",
+                    dataFormat
+                  )
+                : ""
+            }
+            disabled
+          />
+        </label>
       </div>
+
+      <div style={{ marginTop: "30px" }}>
+        <button onClick={handleEdit} style={{ marginRight: "20px" }}>
+          Зберегти зміни
+        </button>
+        <button onClick={handleDelete}>Видалити користувача</button>
+      </div>
+      <h2>Лоти користувача:</h2>
+      {userData.id && (
+        <div style={{ marginTop: "30px" }}>
+          {userData.lots.length === 0 ? (
+            <p>Користувач не створював лотів</p>
+          ) : (
+            <ul>
+              {userData.lots.map((lot) => (
+                <li key={lot.id}>Лот ID: {lot.id}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
     </div>
   );
 }
+
 export default UserControl;

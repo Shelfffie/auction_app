@@ -1,7 +1,19 @@
 import React from "react";
 import "../../styles/styles.css";
+import { Link, useNavigate } from "react-router-dom";
 
 function AboutAuctions() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const handleClick = () => {
+    if (!token) {
+      navigate("/log-in");
+    } else {
+      navigate("/lots");
+    }
+  };
+
   return (
     <section className="about-auctions" id="about-auctions">
       <img src="./../../pics/two-hands.png" alt="" className="two-hands-png" />
@@ -21,15 +33,17 @@ function AboutAuctions() {
         доброчинну мету.
       </p>
       <div className="buttons-about-sections">
-        <a href="" className="create-lot-button-about button-about about-text">
-          Створити лот
-        </a>
-        <a
-          href=""
+        <Link to="lot/create">
+          <p className="create-lot-button-about button-about about-text">
+            Створити лот
+          </p>
+        </Link>
+        <p
           className="make-bet-button-about button-about about-text-brown"
+          onClick={handleClick}
         >
           Зробити ставку
-        </a>
+        </p>
       </div>
     </section>
   );
