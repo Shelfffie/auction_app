@@ -21,13 +21,32 @@ const CreateLot = () => {
       return;
     }
 
-    if (Number(startPrice) <= 0) {
-      alert("Початкова ціна має бути більше 0");
+    const price = parseFloat(startPrice);
+    const now = new Date();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (isNaN(price) || price <= 0 || price > 10000) {
+      alert("Початкова ціна має бути більше 0 та менше 10 000");
       return;
     }
 
-    if (new Date(endDate) <= new Date(startDate)) {
+    if (start < now) {
+      alert("Дата початку не може бути в минулому.");
+      return;
+    }
+
+    if (end <= start) {
       alert("Дата завершення має бути пізніше дати початку");
+      return;
+    }
+
+    const maxEnd = new Date(start);
+    maxEnd.setDate(start.getDate() + 10);
+    if (end > maxEnd) {
+      alert(
+        "Дата завершення не може бути більше ніж через 10 днів після початку"
+      );
       return;
     }
 

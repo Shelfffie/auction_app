@@ -28,11 +28,12 @@ cron.schedule("*/1 * * * *", async () => {
     );
 
     await Lots.update(
-      { status: "on_hold" },
+      { status: "pending" },
       {
         where: {
           start_time: { [Op.gt]: now },
           status: { [Op.ne]: "cancelled" },
+          status: { [Op.ne]: "ended" },
         },
       }
     );

@@ -70,10 +70,13 @@ function Header() {
             ПРО <br /> АУКЦІОНИ
           </HashLink>
         </p>
-        <a href="" className="header-item">
-          ПЕРЕГЛЯНУТИ <br />
-          ЛОТИ
-        </a>
+        <p className="header-item">
+          <Link to="/lots">
+            ПЕРЕГЛЯНУТИ <br />
+            ЛОТИ
+          </Link>
+        </p>
+
         {isLoggedIn && (userRole === "organizer" || userRole === "admin") && (
           <p className="header-item">
             <Link to="/lot/create">

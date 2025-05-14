@@ -10,6 +10,11 @@ import Profile from "../pages/personal-office";
 import SignUp from "../pages/register";
 import CreateLotPage from "../pages/auctions/create-lot";
 import LotPage from "../pages/lot-id";
+import ShowLotPage from "../pages/auctions/show-auction";
+import EndedLotsPage from "../pages/auctions/ended-lots-list";
+import ShowLotByIdPage from "../pages/auctions/showLotsByIdPage";
+import ShowLotsByBidsPage from "../pages/auctions/showLotsByBids";
+import UserControl from "../pages/admin/control-users";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +44,18 @@ export const router = createBrowserRouter([
         element: <LotPage />,
       },
       {
+        path: "lots",
+        element: <ShowLotPage />,
+      },
+      {
+        path: "lots/ended",
+        element: <EndedLotsPage />,
+      },
+      {
+        path: "lots/user/:userId",
+        element: <ShowLotByIdPage />,
+      },
+      {
         element: <ProtectedRoute />,
         children: [
           {
@@ -48,6 +65,18 @@ export const router = createBrowserRouter([
           {
             element: <ProtectedRoute allowedRoles={["admin", "organizer"]} />,
             children: [{ path: "lot/create", element: <CreateLotPage /> }],
+          },
+          {
+            path: "my-lots",
+            element: <ShowLotByIdPage />,
+          },
+          {
+            path: "my-bids",
+            element: <ShowLotsByBidsPage />,
+          },
+          {
+            element: <ProtectedRoute allowedRoles={["admin"]} />,
+            children: [{ path: "admin-panel", element: <UserControl /> }],
           },
         ],
       },

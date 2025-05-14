@@ -23,6 +23,7 @@ const LotId = () => {
   };
 
   const LINK = `http://localhost:3000/api/lot/`;
+  const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -87,6 +88,7 @@ const LotId = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ status: "ended", end_time: formattedNow }),
       });
@@ -126,6 +128,7 @@ const LotId = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ status: newStatus, start_time: newStartTime }),
       });
@@ -152,6 +155,30 @@ const LotId = () => {
     const confirm = window.confirm("Ви впевнені, що хочете зберегти лот?");
     if (!confirm) return;
 
+    const now = new Date();
+    const start = new Date(editedData.startTime);
+    const end = new Date(editedData.endTime);
+    const price = parseFloat(editedData.startedPrice);
+
+    if (start < now) {
+      alert("Дата початку не може бути в минулому.");
+      return;
+    }
+
+    const endData = new Date(start);
+    endData.setDate(start.getDate() + 10);
+    if (end > endData) {
+      alert(
+        "Дата завершення не може бути більше ніж через 10 днів після початку."
+      );
+      return;
+    }
+
+    if (price > 10000) {
+      alert("Початкова ціна не може перевищувати 10000.");
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append("title", editedData.title);
@@ -167,6 +194,9 @@ const LotId = () => {
       const response = await fetch(`${LINK}${id}`, {
         method: "PUT",
         body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -191,6 +221,9 @@ const LotId = () => {
     try {
       const response = await fetch(`${LINK}${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {

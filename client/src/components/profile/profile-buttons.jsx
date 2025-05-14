@@ -8,14 +8,6 @@ function ProfileButtons() {
   const { user, logOut } = useAuth();
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  const buttons = [
-    {
-      label: "Ваші лоти",
-      content: "Тимчасовий текст",
-    },
-    { label: "Активні лоти", content: "Тимчасовий текст" },
-  ];
-
   const handleLogout = () => {
     logOut();
     navigate("/");
@@ -23,19 +15,15 @@ function ProfileButtons() {
 
   return (
     <div className="div-for-profile-buttons">
-      {buttons.map((btn, index) => (
-        <div
-          key={index}
-          onMouseEnter={() => setHoveredIndex(index)}
-          onMouseLeave={() => setHoveredIndex(null)}
-          className="menu-item"
-        >
-          <button className="menu-button">{btn.label}</button>
-          {hoveredIndex === index && (
-            <div className="hover-block">{btn.content}</div>
-          )}
-        </div>
-      ))}
+      {(user?.user_role === "admin" || user?.user_role === "organizer") && (
+        <Link to="/my-lots">
+          <button className="menu-button">Мої лоти</button>
+        </Link>
+      )}
+
+      <Link to="/my-bids">
+        <button className="menu-button">Мої ставки</button>
+      </Link>
       {(user?.user_role === "admin" || user?.user_role === "organizer") && (
         <Link to="/lot/create">
           <button className="menu-button">Створити лот</button>

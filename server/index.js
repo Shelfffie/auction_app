@@ -1,7 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const { Server } = require("socket.io");
+const http = require("http");
 const authRoutes = require("./routes/routes");
-const verifyToken = require("./middlewares/authMiddleware");
 const path = require("path");
 const app = express();
 require("./models/cron/updateLotStatus");
@@ -11,10 +13,34 @@ app.use(express.json());
 
 const PORT = 3000;
 
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  },
+});
+
+app.set("io", io);
+
+io.on("connection", (socket) => {
+  console.log("Клієнт підключився:", socket.id);
+
+  socket.on("joinRoom", (lotId) => {
+    socket.join(lotId);
+    console.log(`Клієнт ${socket.id} приєднався до кімнати ${lotId}`);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Клієнт відключився:", socket.id);
+  });
+});
+
 app.use("/uploads", express.static(path.join(__dirname, "storage")));
 
 app.use("/api", authRoutes);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
 });

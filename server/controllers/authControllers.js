@@ -40,9 +40,13 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Невірний пароль" });
     }
 
-    const token = jwt.sign({ userId: user.id }, "secretKey", {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { userId: user.id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
 
     res
       .status(200)

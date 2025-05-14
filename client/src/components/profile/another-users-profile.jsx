@@ -8,6 +8,8 @@ function UserProfilePage() {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
   const goBack = () => {
     navigate(-1);
   };

@@ -7,12 +7,12 @@ const verifyToken = (req, res, next) => {
     return res.status(403).json({ message: "Токен відсутній" });
   }
 
-  jwt.verify(token, "secretKey", (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.status(403).json({ message: "Токен невалідний" });
     }
 
-    req.user = { id: decoded.userId };
+    req.user = { id: decoded.userId, user_role: decoded.role };
     next();
   });
 };

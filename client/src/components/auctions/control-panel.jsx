@@ -16,25 +16,36 @@ const AuctionControl = ({
 
   const isAdmin = user?.user_role === "admin";
   const isOwner = user.id === creatorId;
-  const canEdit = isAdmin || (isOwner && auctionStatus !== "ended");
+
+  const showStatusButtons =
+    (isAdmin || isOwner) &&
+    (auctionStatus === "active" ||
+      auctionStatus === "cancelled" ||
+      auctionStatus === "pending");
+
+  const showEdit =
+    (isAdmin && auctionStatus !== "cancelled") ||
+    (isAdmin && auctionStatus === "ended") ||
+    (isOwner && auctionStatus !== "ended" && auctionStatus !== "active");
+
+  const showDelete = isOwner || isAdmin || auctionStatus === "ended";
+
   return (
     <div className="control-panel-container">
-      {canEdit && (
+      {showEdit && <button onClick={onEdit}>Редагувати лот</button>}
+
+      {showStatusButtons && auctionStatus !== "ended" && (
         <>
-          <button onClick={onEdit}>Редагувати лот</button>
-          {isAdmin && auctionStatus !== "ended" && (
-            <>
-              <button onClick={onToggleStatus}>
-                {auctionStatus === "cancelled"
-                  ? "Відновити аукціон"
-                  : "Відмінити аукціон"}
-              </button>
-              <button onClick={onFinish}> Завершити аукціон</button>
-            </>
-          )}
-          <button onClick={onDelete}>Видалити лот</button>
+          <button onClick={onToggleStatus}>
+            {auctionStatus === "cancelled"
+              ? "Відновити аукціон"
+              : "Відмінити аукціон"}
+          </button>
+          <button onClick={onFinish}>Завершити аукціон</button>
         </>
       )}
+
+      {showDelete && <button onClick={onDelete}>Видалити лот</button>}
     </div>
   );
 };
