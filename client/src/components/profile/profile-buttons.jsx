@@ -14,25 +14,32 @@ function ProfileButtons() {
   };
 
   return (
-    <div className="div-for-profile-buttons">
-      {(user?.user_role === "admin" || user?.user_role === "organizer") && (
-        <Link to="/my-lots">
-          <button className="menu-button">Мої лоти</button>
-        </Link>
-      )}
+    <>
+      <div className="div-for-profile-buttons">
+        {(user?.user_role === "admin" || user?.user_role === "organizer") && (
+          <Link to="/my-lots">
+            <button className="menu-button">Мої лоти</button>
+          </Link>
+        )}
 
-      <Link to="/my-bids">
-        <button className="menu-button">Мої ставки</button>
-      </Link>
-      {(user?.user_role === "admin" || user?.user_role === "organizer") && (
-        <Link to="/lot/create">
-          <button className="menu-button">Створити лот</button>
+        <Link to="/my-bids">
+          <button className="menu-button">Мої ставки</button>
+        </Link>
+        {(user?.user_role === "admin" || user?.user_role === "organizer") && (
+          <Link to="/lot/create">
+            <button className="menu-button">Створити лот</button>
+          </Link>
+        )}
+        <button className="menu-button" onClick={handleLogout}>
+          Вийти з облікового запису
+        </button>
+      </div>
+      {user?.user_role === "admin" && (
+        <Link to="/admin-panel">
+          <button className="menu-button">Адмін</button>
         </Link>
       )}
-      <button className="menu-button" onClick={handleLogout}>
-        Вийти з облікового запису
-      </button>
-    </div>
+    </>
   );
 }
 

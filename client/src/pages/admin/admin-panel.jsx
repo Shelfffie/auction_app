@@ -12,11 +12,12 @@ const AdminPanel = () => {
         gap: "20px",
         color: "bisque",
         textDecoration: "underline",
+        margin: "20px",
       }}
     >
       <h1>Контроль панель</h1>
-      <Link to="/users-and-lots">Контроль користувачів та лотів</Link>
-      <Link to="/requests">Заяви на зміну статусу</Link>
+      <Link to="/users-and-lots">1. Контроль користувачів та лотів</Link>
+      <Link to="/requests">2. Заяви на зміну статусу</Link>
       <Link to="/">
         <button>Повернутись на сайт</button>
       </Link>

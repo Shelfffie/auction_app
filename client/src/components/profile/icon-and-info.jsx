@@ -79,7 +79,11 @@ function ProfilePage() {
 
   return (
     <div className="profile-info">
-      <img src="./../../../pics/donut.png" alt="" className="profile-icon" />
+      <img
+        src="./../../../pics/null-donut.png"
+        alt=""
+        className="profile-icon"
+      />
       <div className="general-information">
         <p className="big-text">Основна інформація:</p>
         <p>Ім'я</p>

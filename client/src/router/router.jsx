@@ -20,6 +20,7 @@ import SendRequestPage from "../pages/sendRequest";
 import RequestAboutId from "../pages/admin/request-id-page";
 import ShowActiveRequests from "../pages/admin/active-requests";
 import AdminPanel from "../pages/admin/admin-panel";
+import RequestsHistory from "../pages/admin/requests.-history";
 
 export const router = createBrowserRouter([
   {
@@ -98,6 +99,7 @@ export const router = createBrowserRouter([
               { path: "users-and-lots", element: <AdminPage /> },
               { path: "request/:id", element: <RequestAboutId /> },
               { path: "requests", element: <ShowActiveRequests /> },
+              { path: "requests/history", element: <RequestsHistory /> },
             ],
           },
         ],

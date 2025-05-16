@@ -122,14 +122,24 @@ const showActiveRequests = async (req, res) => {
 
 const requestsHistory = async (req, res) => {
   try {
-    const requests = await Requests.findAll({
+    const page = parseInt(req.query.page) || 1;
+    const limit = 5;
+    const offset = (page - 1) * limit;
+    const { count, rows: requests } = await Requests.findAndCountAll({
       order: [["created_at", "DESC"]],
+      limit,
+      offset,
       attributes: ["id", "fullName", "status", "created_at", "user_id"],
     });
 
-    res.json(requests);
+    res.json({
+      total: count,
+      page,
+      totalPages: Math.ceil(count / limit),
+      requests,
+    });
   } catch (error) {
-    console.log("Помилка при заявок:", error);
+    console.log("Помилка при отриманні заявок:", error);
     res.status(500).json({ message: "Помилка сервера" });
   }
 };

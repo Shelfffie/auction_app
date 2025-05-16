@@ -33,7 +33,7 @@ function ShowActiveRequests() {
   return (
     <div style={{ color: "bisque" }}>
       <h1>Необроблені заявки</h1>
-      <Link to="/lots/ended">
+      <Link to="/requests/history">
         <p style={{ textDecoration: "underline", cursor: "pointer" }}>
           Переглянути історію всіх заявок
         </p>
@@ -58,6 +58,11 @@ function ShowActiveRequests() {
           </Link>
         ))
       )}
+      <Link to="/admin-panel">
+        <p style={{ textDecoration: "underline", cursor: "pointer" }}>
+          Повернутися на адмін панель
+        </p>
+      </Link>
     </div>
   );
 }
