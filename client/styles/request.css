@@ -1,0 +1,76 @@
+.request-container {
+  color: #554332;
+  width: 1400px;
+  border-radius: 5px;
+  background-color: #fff2dd;
+  display: flex;
+  flex-direction: row;
+}
+
+.passport-selfie-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 900px;
+}
+
+.passport-selfie-image {
+  border: 5px solid #6e8566;
+  border-radius: 5px;
+  max-width: 400px;
+  max-height: 350px;
+  object-fit: cover;
+}
+
+.photo-item-center {
+  margin-top: -60px;
+  text-align: center;
+}
+
+.name-birth-number-container {
+  margin: 150px 0 0 150px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-380 {
+  border: none;
+  color: #554332;
+  border-radius: 5px 0 0 5px;
+  background-color: rgb(182, 166, 135);
+  height: 40px;
+  width: 50px;
+}
+
+.container-380::placeholder {
+  color: #554332;
+}
+
+.input-phone-number {
+  height: 40px;
+  width: 550px;
+  border-radius: 0 5px 5px 0;
+  color: #554332;
+  background-color: rgb(212, 192, 156);
+  border: none;
+}
+
+.input-phone-number::placeholder {
+  color: #554332;
+}
+
+.make-request-button {
+  margin-top: 70px;
+  background-color: #554332;
+  color: #fff2dd;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  height: 70px;
+  width: 200px;
+}
+
+.make-request-button:hover {
+  background-color: #3f3124;
+  transition: all 0.3s ease;
+}

@@ -2,6 +2,14 @@ const express = require("express");
 const router = express.Router();
 const { Users } = require("../models");
 
+const {
+  RequestsControl,
+  GetRequestId,
+  changeRequestStatus,
+  showActiveRequests,
+  requestsHistory,
+} = require("../controllers/verifyController");
+
 const { registerUser, loginUser } = require("../controllers/authControllers");
 const { profileContr } = require("../controllers/profileControllers.js");
 const verifyToken = require("../middlewares/authMiddleware");
@@ -40,6 +48,7 @@ const {
   deletlotControl,
 } = require("../controllers/admin/lotControl");
 const upload = require("../middlewares/uploadMiddlewares");
+const requestsPhoto = require("../middlewares/requestsMiddlewares");
 const verifyAdmin = require("../middlewares/requireAdmin");
 
 router.get("/admin/controller/user/:id", verifyToken, verifyAdmin, GetUserInfo);
@@ -128,5 +137,26 @@ router.get("/lots/ended", showAllLots);
 
 router.get("/creator/:userId", showCreatedLots),
   router.get("/participated/:userId", showBidsById);
+
+router.post(
+  "/request",
+  verifyToken,
+  requestsPhoto.fields([
+    { name: "passport", maxCount: 1 },
+    { name: "selfie", maxCount: 1 },
+  ]),
+  RequestsControl
+);
+
+router.get("/request/:id", verifyToken, verifyAdmin, GetRequestId);
+router.put(
+  "/request/:id/status",
+  verifyToken,
+  verifyAdmin,
+  changeRequestStatus
+);
+
+router.get("/requests/active", verifyToken, verifyAdmin, showActiveRequests);
+router.get("/requests/history", verifyToken, verifyAdmin, requestsHistory);
 
 module.exports = router;

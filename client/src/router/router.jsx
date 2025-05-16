@@ -16,6 +16,10 @@ import EndedLotsPage from "../pages/auctions/ended-lots-list";
 import ShowLotByIdPage from "../pages/auctions/showLotsByIdPage";
 import ShowLotsByBidsPage from "../pages/auctions/showLotsByBids";
 import AdminPage from "../pages/admin/control-page";
+import SendRequestPage from "../pages/sendRequest";
+import RequestAboutId from "../pages/admin/request-id-page";
+import ShowActiveRequests from "../pages/admin/active-requests";
+import AdminPanel from "../pages/admin/admin-panel";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +69,10 @@ export const router = createBrowserRouter([
         element: <ShowLotByIdPage />,
       },
       {
+        path: "request",
+        element: <SendRequestPage />,
+      },
+      {
         element: <ProtectedRoute />,
         children: [
           {
@@ -85,7 +93,12 @@ export const router = createBrowserRouter([
           },
           {
             element: <ProtectedRoute allowedRoles={["admin"]} />,
-            children: [{ path: "admin-panel", element: <AdminPage /> }],
+            children: [
+              { path: "admin-panel", element: <AdminPanel /> },
+              { path: "users-and-lots", element: <AdminPage /> },
+              { path: "request/:id", element: <RequestAboutId /> },
+              { path: "requests", element: <ShowActiveRequests /> },
+            ],
           },
         ],
       },
