@@ -83,10 +83,30 @@
   border: 2px solid #957a61;
 }
 
+.go-to-chat {
+  margin: 20px;
+  text-align: center;
+  height: 40px;
+  width: 300px;
+  border-radius: 5px;
+  color: #554332;
+  background-color: rgb(212, 192, 156);
+  border: none;
+}
+
+.go-to-chat:hover {
+  background-color: rgb(224, 205, 168);
+  transition: all 0.3s ease;
+}
+
 .make-bid-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.winner-div {
+  background-color: #96b48d;
 }
 
 .set-bid-value {

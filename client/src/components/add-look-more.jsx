@@ -13,7 +13,11 @@ function LookAddButtons() {
       </Link>
       <Link to="lots">
         <div className="block-for-photo-image">
-          <img src="./../../pics/donut.png" alt="" className="donut-image" />
+          <img
+            src="./../../pics/somu-donuts.png"
+            alt=""
+            className="donut-image"
+          />
           <h1 className="about-text">Всі лоти</h1>
         </div>
       </Link>

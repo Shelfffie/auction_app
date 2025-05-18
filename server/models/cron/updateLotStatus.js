@@ -18,11 +18,12 @@ cron.schedule("*/1 * * * *", async () => {
     );
 
     await Lots.update(
-      { status: "ended" },
+      { status: "ended", payment_status: "unpaid" },
       {
         where: {
           end_time: { [Op.lt]: now },
           status: { [Op.ne]: "cancelled" },
+          payment_status: { [Op.is]: null },
         },
       }
     );

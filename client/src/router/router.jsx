@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import AuthorizedForChatRoute from "./authorizedForChatRoute";
 import AnotherUserProfile from "../pages/user.profile";
 import ProtectedRoute from "./protected-route";
 import RedirectIfAuth from "./redirectIfAuth";
@@ -21,6 +22,8 @@ import RequestAboutId from "../pages/admin/request-id-page";
 import ShowActiveRequests from "../pages/admin/active-requests";
 import AdminPanel from "../pages/admin/admin-panel";
 import RequestsHistory from "../pages/admin/requests.-history";
+import MessagePage from "../pages/messagesPage";
+import ChoosePayment from "../components/auctions/payment-choose";
 
 export const router = createBrowserRouter([
   {
@@ -69,10 +72,7 @@ export const router = createBrowserRouter([
         path: "lots/user/:userId",
         element: <ShowLotByIdPage />,
       },
-      {
-        path: "request",
-        element: <SendRequestPage />,
-      },
+
       {
         element: <ProtectedRoute />,
         children: [
@@ -91,6 +91,26 @@ export const router = createBrowserRouter([
           {
             path: "my-bids",
             element: <ShowLotsByBidsPage />,
+          },
+          {
+            path: "/lot/:auctionId/messages",
+            element: (
+              <AuthorizedForChatRoute>
+                <MessagePage />
+              </AuthorizedForChatRoute>
+            ),
+          },
+          {
+            path: "/lot/:auctionId/payment",
+            element: (
+              <AuthorizedForChatRoute>
+                <ChoosePayment />
+              </AuthorizedForChatRoute>
+            ),
+          },
+          {
+            path: "request",
+            element: <SendRequestPage />,
           },
           {
             element: <ProtectedRoute allowedRoles={["admin"]} />,

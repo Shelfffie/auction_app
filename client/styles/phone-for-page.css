@@ -7,3 +7,10 @@
   height: 100vh;
   background-color: #fff2dd;
 }
+
+.div-for-raw {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

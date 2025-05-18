@@ -52,6 +52,11 @@ const Lots = sequelize.define(
       allowNull: true,
       defaultValue: DataTypes.NOW,
     },
+    payment_status: {
+      type: DataTypes.ENUM("paid", "unpaid"),
+      allowNull: true,
+      defaultValue: null,
+    },
   },
   {
     tableName: "auctions",

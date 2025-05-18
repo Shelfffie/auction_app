@@ -1,0 +1,177 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: #6e8566;
+}
+
+.mini-div-for-lot {
+  margin-left: 70px;
+  margin-top: 150px;
+  border-radius: 5px;
+  color: #554332;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff2dd;
+  height: 500px;
+  width: 400px;
+  text-align: center;
+}
+
+.tittle-minilot {
+  font-size: 28px;
+}
+
+.payment-status-block {
+  background-color: rgb(212, 192, 156);
+  width: 100%;
+}
+
+.information-about-minilot {
+  margin-top: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.image-for-mini-lot {
+  border: 2px solid #554332;
+  border-radius: 5px;
+  height: 250px;
+  width: 250px;
+  object-fit: cover;
+}
+
+.page-for-messages {
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.messages-block {
+  color: #554332;
+  display: flex;
+  flex-direction: column;
+  border: 20px solid #fff2dd;
+  background-color: rgb(212, 192, 156);
+  margin-top: 150px;
+  height: 500px;
+  border-radius: 5px;
+  width: 1000px;
+  overflow: hidden;
+}
+
+.new-message-block {
+  flex: 1;
+  overflow-y: auto;
+  height: 80%;
+}
+
+.send-message-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff2dd;
+  height: 25%;
+}
+
+.input-message {
+  border-radius: 5px;
+  margin-top: 20px;
+  background-color: rgb(212, 192, 156);
+  height: 30px;
+}
+
+.input-message::placeholder {
+  color: #554332;
+}
+
+.send-message-button {
+  border-radius: 5px;
+  background-color: rgb(212, 192, 156);
+  width: 300px;
+  height: 40px;
+  margin-left: 70%;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.send-message-button:hover {
+  background-color: rgb(167, 152, 125);
+}
+
+.send-message-button:active {
+  background-color: rgb(167, 152, 125);
+  transform: scale(1.05);
+}
+
+.two-buttons-message-page {
+  display: flex;
+  flex-direction: row;
+  gap: 500px;
+}
+
+.return-to-lot {
+  width: 200px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.return-to-lot:hover {
+  color: rgb(167, 152, 125);
+  transform: all 0.3s ease;
+}
+
+.message-wrapper {
+  display: flex;
+  margin: 10px;
+}
+
+.message {
+  position: relative;
+  padding: 10px 14px;
+  border-radius: 18px;
+  max-width: 70%;
+  word-wrap: break-word;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.sent {
+  background-color: #d1ffd6;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.received {
+  background-color: #fff2dd;
+  align-self: flex-start;
+  margin-right: auto;
+}
+
+.sent::after {
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: 10px;
+  border-width: 8px 0 8px 10px;
+  border-style: solid;
+  border-color: transparent transparent transparent #d1ffd6;
+}
+
+.received::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 10px;
+  border-width: 8px 10px 8px 0;
+  border-style: solid;
+  border-color: transparent #fff2dd transparent transparent;
+}

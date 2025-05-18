@@ -56,6 +56,7 @@ const IdLots = async (req, res) => {
         "end_time",
         "created_at",
         "status",
+        "payment_status",
       ],
       include: [
         {
@@ -80,6 +81,7 @@ const IdLots = async (req, res) => {
       end_time: lot.end_time,
       created_at: lot.created_at,
       status: lot.status,
+      payment_status: lot.payment_status,
       creator: lot.creator
         ? {
             userId: lot.creator.id,
@@ -201,10 +203,35 @@ const delLotCntrl = async (req, res) => {
   }
 };
 
+const payLotController = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const lot = await Lots.findByPk(id);
+
+    if (!lot) {
+      return res.status(404).json({ message: "Лот не знайдено" });
+    }
+
+    if (lot.payment_status === "paid") {
+      return res.status(400).json({ message: "Лот уже оплачений" });
+    }
+
+    lot.payment_status = "paid";
+    await lot.save();
+
+    res.status(200).json({ message: "Оплата успішна", lot });
+  } catch (error) {
+    console.error("Помилка оплати:", error);
+    res.status(500).json({ message: "Помилка сервера при оплаті" });
+  }
+};
+
 module.exports = {
   LotContrl,
   IdLots,
   editLotContrl,
   editLotStatus,
   delLotCntrl,
+  payLotController,
 };

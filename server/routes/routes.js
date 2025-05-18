@@ -20,6 +20,7 @@ const {
   editLotContrl,
   editLotStatus,
   delLotCntrl,
+  payLotController,
 } = require("../controllers/lotsController");
 
 const { addBid, getBiddsByAuction } = require("../controllers/bidsController");
@@ -50,6 +51,14 @@ const {
 const upload = require("../middlewares/uploadMiddlewares");
 const requestsPhoto = require("../middlewares/requestsMiddlewares");
 const verifyAdmin = require("../middlewares/requireAdmin");
+const {
+  sendMessage,
+  getMessage,
+} = require("../controllers/messagesControllers");
+
+router.post("/lot/:id/pay", verifyToken, payLotController);
+router.get("/messages/:auction_id", verifyToken, getMessage);
+router.post("/messages", verifyToken, sendMessage);
 
 router.get("/admin/controller/user/:id", verifyToken, verifyAdmin, GetUserInfo);
 router.put(

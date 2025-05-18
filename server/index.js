@@ -27,9 +27,9 @@ app.set("io", io);
 io.on("connection", (socket) => {
   console.log("Клієнт підключився:", socket.id);
 
-  socket.on("joinRoom", (lotId) => {
-    socket.join(lotId);
-    console.log(`Клієнт ${socket.id} приєднався до кімнати ${lotId}`);
+  socket.on("joinRoom", (roomId) => {
+    socket.join(roomId);
+    console.log(`Клієнт ${socket.id} приєднався до кімнати ${roomId}`);
   });
 
   socket.on("disconnect", () => {

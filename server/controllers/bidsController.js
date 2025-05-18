@@ -37,7 +37,7 @@ const getBiddsByAuction = async (req, res) => {
     const bids = await Bids.findAll({
       where: { auction_id: req.params.id },
       order: [["created_at"]],
-      include: [{ model: Users, attributes: ["name"], as: "user_bid" }],
+      include: [{ model: Users, attributes: ["name", "id"], as: "user_bid" }],
     });
     res.json(bids);
   } catch (error) {
