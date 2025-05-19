@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function ShowActiveRequests() {
+  useEffect(() => {
+    document.title = `Адмін - необроблені заявки`;
+  }, []);
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");

@@ -1,9 +1,12 @@
 import React from "react";
+import { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 const AdminPanel = () => {
   const navigate = useNavigate();
-
+  useEffect(() => {
+    document.title = `Адмін - контроль панель`;
+  }, []);
   return (
     <div
       style={{

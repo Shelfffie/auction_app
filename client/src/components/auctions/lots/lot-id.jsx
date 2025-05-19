@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../../hooks/authContext";
 import { Link } from "react-router-dom";
+import { SITE_TITLE } from "../../../siteTittle";
 import BidsContainer from "../bids";
 import AuctionControl from "../control-panel";
 import "../../../../styles/lots.css";
@@ -66,6 +67,14 @@ const LotId = () => {
 
     fetchData();
   }, [id]);
+
+  useEffect(() => {
+    if (lotData?.title) {
+      document.title = `${SITE_TITLE} - ${lotData.title}`;
+    } else {
+      document.title = `${SITE_TITLE} - Такого лоту не існує!`;
+    }
+  }, [lotData]);
 
   const editChange = (e) => {
     setEditedData({ ...editedData, [e.target.name]: e.target.value });

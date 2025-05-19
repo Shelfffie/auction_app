@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { SITE_TITLE } from "../../siteTittle";
 import { useNavigate } from "react-router-dom";
 import "./../../../styles/profile.css";
 
@@ -30,6 +31,13 @@ function UserProfilePage() {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    if (userData?.name) {
+      document.title = `${SITE_TITLE} - Профіль ${userData.name}`;
+    } else {
+      document.title = `${SITE_TITLE} - Такого користувача не існує!`;
+    }
+  }, [userData]);
   if (error) {
     return (
       <div className="profile-info">

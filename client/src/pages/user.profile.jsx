@@ -4,8 +4,6 @@ import UserProfilePage from "../components/profile/another-users-profile.jsx";
 import "../../styles/phone-for-page.css";
 
 function AnotherUserProfile() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <div className="white">

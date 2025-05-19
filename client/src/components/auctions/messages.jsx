@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { SITE_TITLE } from "../../siteTittle";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/authContext";
 import { io } from "socket.io-client";
@@ -16,6 +17,7 @@ const MessageDiv = () => {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
   const { user } = useAuth();
+  const [lotTitle, setLotTitle] = useState(null);
 
   useEffect(() => {
     const fetchReceiverId = async () => {
@@ -46,6 +48,8 @@ const MessageDiv = () => {
         } else {
           setReceiverId(lot.creator.userId);
         }
+
+        setLotTitle(lot.title);
       } catch (err) {
         console.error("Помилка завантаження лоту/ставок:", err);
       }
@@ -53,6 +57,18 @@ const MessageDiv = () => {
 
     if (user) fetchReceiverId();
   }, [auctionId, user]);
+
+  useEffect(() => {
+    if (lotTitle && lotTitle.trim() !== "") {
+      document.title = `${SITE_TITLE} - повідомлення "${lotTitle}" `;
+    } else {
+      document.title = `${SITE_TITLE} - Такого лоту не існує!`;
+    }
+
+    return () => {
+      document.title = SITE_TITLE;
+    };
+  }, [lotTitle]);
 
   useEffect(() => {
     if (!auctionId) return;

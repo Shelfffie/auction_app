@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { SITE_TITLE } from "../../siteTittle";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/authContext";
 import fundImage from "../../../pics/two-hands.png";
@@ -31,6 +32,14 @@ const ChoosePayment = () => {
 
     fetchData();
   }, [auctionId]);
+
+  useEffect(() => {
+    if (lotData?.title) {
+      document.title = `${SITE_TITLE} - Вибір оплати "${lotData.title}"`;
+    } else {
+      document.title = `${SITE_TITLE} - Такого лоту не існує!`;
+    }
+  }, [lotData?.title]);
 
   const handlePayment = async () => {
     try {

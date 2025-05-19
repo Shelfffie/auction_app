@@ -8,6 +8,10 @@ function RequestsHistory() {
   const [totalPages, setTotalPages] = useState(1);
   const limit = 5;
 
+  useEffect(() => {
+    document.title = `Адмін - архів заявок`;
+  }, []);
+
   const fetchRequests = async (page) => {
     try {
       const token = localStorage.getItem("token");
