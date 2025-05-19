@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { SITE_TITLE } from "../siteTittle";
 import UserProfilePage from "../components/profile/another-users-profile.jsx";
 import NewRequest from "../components/requests.jsx";
+import Header from "../components/header";
 import "../../styles/phone-for-page.css";
 
 function SendRequestPage() {

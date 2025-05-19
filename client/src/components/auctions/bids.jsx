@@ -164,12 +164,12 @@ const BidsContainer = ({ creatorId, auctionStatus, lotId, startedPrice }) => {
                 )}
 
                 {winner &&
-                  (user.id === winner?.user_bid?.id ||
-                    user.id === creatorId) && (
+                  (user?.id === winner?.user_bid?.id ||
+                    user?.id === creatorId) && (
                     <Link to={`/lot/${lotId}/messages`}>
                       <button className="go-to-chat">
                         Перейти в чат з{" "}
-                        {user.id === winner?.user_bid?.id
+                        {user?.id === winner?.user_bid?.id
                           ? "організатором"
                           : "переможцем"}
                       </button>

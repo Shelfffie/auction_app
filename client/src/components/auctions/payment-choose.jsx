@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { SITE_TITLE } from "../../siteTittle";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/authContext";
 import fundImage from "../../../pics/two-hands.png";
+import "../../../styles/payment-choose.css";
 
 const ChoosePayment = () => {
+  const navigate = useNavigate();
   const { auctionId } = useParams();
   const { user } = useAuth();
   const [lotData, setLotData] = useState(null);
@@ -15,6 +17,12 @@ const ChoosePayment = () => {
       id: 1,
       title: "Фонд допомоги",
       description: "Фонд допомагає у важких обставинах",
+      image: fundImage,
+    },
+    {
+      id: 2,
+      title: "Фонд допомоги тваринам",
+      description: "Фонд допомагає тваринам, підтримуває притулки",
       image: fundImage,
     },
   ]);
@@ -57,6 +65,9 @@ const ChoosePayment = () => {
 
       if (res.ok) {
         setIsPaid(true);
+        setTimeout(() => {
+          navigate(`/lot/${auctionId}/messages`);
+        }, 2000);
       } else {
         console.log("Помилка при оплаті");
       }
@@ -67,31 +78,49 @@ const ChoosePayment = () => {
 
   return (
     <div className="all-page">
-      <h2>Оберіть фонд для підтримки:</h2>
+      <h2 className="choose-fund-title">Оберіть фонд для підтримки:</h2>
       <div className="some-funds">
         {funds.map((fund) => (
-          <div className="one-fund" key={fund.id}>
-            <img src={fund.image} alt={fund.title} className="fund-image" />
-            <p className="fund-tittle">{fund.title}</p>
-            <p className="fund-description">{fund.description}</p>
-            <button onClick={() => setSelectedFund(fund)}>Обрати</button>
+          <div key={fund.id}>
+            <div className="one-fund">
+              <img src={fund.image} alt={fund.title} className="fund-image" />
+              <div className="title-description-fund">
+                <h2 className="fund-title">{fund.title}</h2>
+                <p className="fund-description">{fund.description}</p>
+              </div>
+              <button
+                onClick={() => setSelectedFund(fund)}
+                className="fund-button"
+              >
+                Обрати
+              </button>
+            </div>
+
+            {selectedFund?.id === fund.id && (
+              <>
+                {isPaid ? (
+                  <div className="payment-info">
+                    <h2>Дякуємо за оплату!</h2>
+                  </div>
+                ) : (
+                  <div className="payment-info">
+                    <div>
+                      <h3>Ви обрали фонд: {fund.title}</h3>
+                      <p>
+                        Сума до оплати:{" "}
+                        <strong>{lotData?.start_price || 0} грн</strong>
+                      </p>
+                    </div>
+                    <button onClick={handlePayment} className="payment-button">
+                      Оплатити
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         ))}
       </div>
-      {selectedFund && lotData && !isPaid && (
-        <div className="payment-info">
-          <h3>Ви обрали фонд: {selectedFund.title}</h3>
-          <p>
-            Сума до оплати: <strong>{lotData.start_price} грн</strong>
-          </p>
-          <button onClick={handlePayment}>Оплатити</button>
-        </div>
-      )}
-      {isPaid && (
-        <div className="success-message">
-          <h3>Дякуємо за оплату!</h3>
-        </div>
-      )}
     </div>
   );
 };

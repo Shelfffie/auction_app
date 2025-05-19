@@ -431,7 +431,7 @@ const LotId = () => {
           </div>
         </div>
       </div>
-      {(user.id === lotData?.creator?.userId || user?.user_role === "admin") &&
+      {(user?.id === lotData?.creator?.userId || user?.user_role === "admin") &&
         (isEditing ? (
           <div className="control-panel-container">
             <button onClick={SaveChanges}>Зберегти зміни</button>

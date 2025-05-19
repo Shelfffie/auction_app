@@ -21,7 +21,16 @@ function ProfileButtons() {
             <button className="menu-button">Мої лоти</button>
           </Link>
         )}
-
+        {user?.user_role === "user" && (
+          <Link to="/request">
+            <button className="menu-button">
+              Подати заявку на зміну статусу
+            </button>
+          </Link>
+        )}
+        <Link to="/lots/won">
+          <button className="menu-button">Виграні лоти</button>
+        </Link>
         <Link to="/my-bids">
           <button className="menu-button">Мої ставки</button>
         </Link>

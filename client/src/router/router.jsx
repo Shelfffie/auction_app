@@ -24,6 +24,8 @@ import AdminPanel from "../pages/admin/admin-panel";
 import RequestsHistory from "../pages/admin/requests.-history";
 import MessagePage from "../pages/messagesPage";
 import ChoosePayment from "../components/auctions/payment-choose";
+import OnlyUserOrGuestRoute from "./ordinaryUser";
+import WonLotsPage from "../pages/wonLotsPage";
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +95,10 @@ export const router = createBrowserRouter([
             element: <ShowLotsByBidsPage />,
           },
           {
+            path: "/lots/won",
+            element: <WonLotsPage />,
+          },
+          {
             path: "/lot/:auctionId/messages",
             element: (
               <AuthorizedForChatRoute>
@@ -110,7 +116,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "request",
-            element: <SendRequestPage />,
+            element: (
+              <OnlyUserOrGuestRoute>
+                <SendRequestPage />
+              </OnlyUserOrGuestRoute>
+            ),
           },
           {
             element: <ProtectedRoute allowedRoles={["admin"]} />,

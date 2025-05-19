@@ -16,6 +16,11 @@ const AuthorizedForChatRoute = ({ children }) => {
         );
         const lot = await resLot.json();
 
+        if (lot.status !== "ended") {
+          setAuthorized(false);
+          return;
+        }
+
         const resBids = await fetch(
           `http://localhost:3000/api/lot/${auctionId}/bids`
         );
@@ -46,7 +51,7 @@ const AuthorizedForChatRoute = ({ children }) => {
 
   if (loading) return <div>Завантаження...</div>;
 
-  if (!authorized) return <Navigate to="/lots" replace />;
+  if (!authorized) return <Navigate to={`/lot/${auctionId}`} replace />;
 
   return children;
 };

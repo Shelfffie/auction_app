@@ -30,6 +30,7 @@ const {
   showLots,
   showActiveLots,
   showAllLots,
+  getWonLots,
 } = require("../controllers/showLotsControl");
 
 const {
@@ -56,6 +57,7 @@ const {
   getMessage,
 } = require("../controllers/messagesControllers");
 
+router.get("/won/:userId", getWonLots);
 router.post("/lot/:id/pay", verifyToken, payLotController);
 router.get("/messages/:auction_id", verifyToken, getMessage);
 router.post("/messages", verifyToken, sendMessage);

@@ -1,4 +1,4 @@
-const { Lots, Users } = require("../models");
+const { Lots, Users, Bids } = require("../models");
 const { Op } = require("sequelize");
 
 const showLots = async (req, res) => {
@@ -117,4 +117,37 @@ const showAllLots = async (req, res) => {
   }
 };
 
-module.exports = { showLots, showActiveLots, showAllLots };
+const getWonLots = async (req, res) => {
+  const userId = parseInt(req.params.userId);
+
+  try {
+    const endedLots = await Lots.findAll({
+      where: { status: "ended" },
+      include: [
+        {
+          model: Bids,
+          as: "bids",
+          required: true,
+        },
+      ],
+    });
+
+    const wonLots = endedLots.filter((lot) => {
+      const bids = lot.bids || [];
+      if (bids.length === 0) return false;
+
+      const highestBid = bids.reduce((max, bid) =>
+        bid.amount > max.amount ? bid : max
+      );
+
+      return highestBid.user_id === userId;
+    });
+
+    res.json(wonLots);
+  } catch (error) {
+    console.error("Помилка в getWonLots:", error);
+    res.status(500).json({ error: "Помилка отримання виграних лотів" });
+  }
+};
+
+module.exports = { showLots, showActiveLots, showAllLots, getWonLots };

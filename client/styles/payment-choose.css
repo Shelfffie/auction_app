@@ -1,0 +1,96 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.all-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.choose-fund-title {
+  color: #fff2dd;
+  margin-top: 70px;
+  font-size: 48px;
+}
+
+.some-funds {
+  flex: 1;
+  border-radius: 5px;
+  margin-top: 70px;
+  background-color: #fff2dd;
+  width: 1100px;
+}
+
+.one-fund {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10%;
+  height: 200px;
+  border-top: 5px solid rgb(212, 192, 156);
+  border-right: 5px solid rgb(212, 192, 156);
+  border-left: 5px solid rgb(212, 192, 156);
+}
+
+.fund-image {
+  border-radius: 5px;
+  border: 5px solid #554332;
+  width: 150px;
+  height: 150px;
+}
+
+.title-description-fund {
+  width: 500px;
+  color: #554332;
+}
+
+.fund-button {
+  border: none;
+  height: 100%;
+  width: 200px;
+  background-color: rgb(212, 192, 156);
+  transition: all 0.5s ease;
+}
+
+.fund-button:hover,
+.payment-button:hover {
+  background-color: #554332;
+  color: rgb(212, 192, 156);
+}
+
+.payment-info {
+  display: flex;
+  flex-direction: row;
+  gap: 90px;
+  color: #554332;
+  background-color: rgb(212, 192, 156);
+  padding-top: 1px;
+}
+
+.payment-info div {
+  margin-left: 30px;
+  width: 50%;
+}
+
+.payment-info h2 {
+  text-align: center;
+  align-items: center;
+  height: 60px;
+  margin-left: 50px;
+}
+
+.payment-button {
+  margin-top: 70px;
+  height: 50px;
+  width: 200px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff2dd;
+  transition: all 0.5s ease;
+}

@@ -17,7 +17,7 @@ function ProtectedRoute({ allowedRoles = [] }) {
   }
 
   if (!hasPermission) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/request" replace />;
   }
 
   return <Outlet />;
