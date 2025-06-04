@@ -3,6 +3,7 @@ const { Lots } = require("./lots");
 const { Bids } = require("./bids");
 const { Requests } = require("./verification");
 const { Messages } = require("./messages");
+const { Appeals } = require("./appeals");
 
 Users.hasMany(Lots, { foreignKey: "creator_id" });
 Lots.belongsTo(Users, { foreignKey: "creator_id", as: "creator" });
@@ -22,10 +23,14 @@ Users.hasMany(Messages, { foreignKey: "receiver_id" });
 Messages.belongsTo(Users, { foreignKey: "receiver_id", as: "receiver" });
 Messages.belongsTo(Lots, { foreignKey: "auction_id" });
 
+Users.hasMany(Appeals, { foreignKey: "user_id" });
+Appeals.belongsTo(Users, { foreignKey: "user_id", as: "banned_user" });
+
 module.exports = {
   Users,
   Lots,
   Bids,
   Requests,
   Messages,
+  Appeals,
 };

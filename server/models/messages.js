@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/users-config.js");
+const sequelize = require("../config/bd-config.js");
 
 const Messages = sequelize.define(
   "Messages",

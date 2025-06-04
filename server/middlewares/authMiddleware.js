@@ -12,7 +12,11 @@ const verifyToken = (req, res, next) => {
       return res.status(403).json({ message: "Токен невалідний" });
     }
 
-    req.user = { id: decoded.userId, user_role: decoded.role };
+    req.user = {
+      id: decoded.userId,
+      user_role: decoded.role,
+      status: decoded.status,
+    };
     next();
   });
 };

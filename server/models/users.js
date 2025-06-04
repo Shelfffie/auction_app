@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/users-config.js");
+const sequelize = require("../config/bd-config.js");
 
 const Users = sequelize.define(
   "Users",
@@ -27,8 +27,8 @@ const Users = sequelize.define(
       defaultValue: "user",
     },
     status: {
-      type: DataTypes.ENUM("active", "deleted", "banned"),
-      defaultValue: "active",
+      type: DataTypes.ENUM("unverified", "active", "deleted", "banned"),
+      defaultValue: "unverified",
     },
     created_at: {
       type: DataTypes.DATE,

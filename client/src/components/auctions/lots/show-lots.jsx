@@ -17,7 +17,7 @@ function ShowLots() {
         `http://localhost:3000/api/lots/active?page=${page}&limit=${limit}`
       );
       const data = await response.json();
-      setLots(data.lots);
+      setLots(data.lots || []);
       setTotalPages(data.totalPages);
     } catch (error) {
       console.error("Помилка при завантаженні лотів:", error);

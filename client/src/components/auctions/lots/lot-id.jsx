@@ -102,7 +102,7 @@ const LotId = () => {
         body: JSON.stringify({ status: "ended", end_time: formattedNow }),
       });
 
-      if (!response.ok) throw new Error("Не вдалося завершити статус");
+      if (!response.ok) throw new Error("Не вдалося завершити");
 
       const updated = await response.json();
       setLotStatus(updated.status);

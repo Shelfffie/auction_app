@@ -72,7 +72,6 @@ const CreateLot = () => {
       });
 
       const data = await response.json();
-      console.log("Відповідь сервера:", data);
       if (!response.ok) {
         throw new Error(data.message || "Не вдалося створити лот");
       }

@@ -21,6 +21,7 @@ const AdminPanel = () => {
       <h1>Контроль панель</h1>
       <Link to="/users-and-lots">1. Контроль користувачів та лотів</Link>
       <Link to="/requests">2. Заяви на зміну статусу</Link>
+      <Link to="/recovery-requests">3. Заяви на відновлення акаунту</Link>
       <Link to="/">
         <button>Повернутись на сайт</button>
       </Link>

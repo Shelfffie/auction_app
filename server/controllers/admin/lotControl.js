@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const { Lots } = require("../../models");
 
 const GetlotInfo = async (req, res) => {

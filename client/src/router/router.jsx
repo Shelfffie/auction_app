@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
+import DeletedOrBannedRpoter from "./RouterForDeletedOrBanned";
+import DeletedOrBannedPage from "../components/banned-deleted";
 import AuthorizedForChatRoute from "./authorizedForChatRoute";
 import AnotherUserProfile from "../pages/user.profile";
 import ProtectedRoute from "./protected-route";
@@ -26,11 +28,19 @@ import MessagePage from "../pages/messagesPage";
 import ChoosePayment from "../components/auctions/payment-choose";
 import OnlyUserOrGuestRoute from "./ordinaryUser";
 import WonLotsPage from "../pages/wonLotsPage";
+import VerifyEmail from "../components/sign-up-and-log-in/verifyemail";
+import RequestRecoveryPage from "../pages/request-recover";
+import ShowActiveAppeals from "../pages/admin/recover-requests";
+import RecoverRequestsHistory from "../pages/admin/recovery-requests-history";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <DeletedOrBannedRpoter>
+        <Layout />
+      </DeletedOrBannedRpoter>
+    ),
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
@@ -47,6 +57,14 @@ export const router = createBrowserRouter([
         element: (
           <RedirectIfAuth>
             <LogIn />
+          </RedirectIfAuth>
+        ),
+      },
+      {
+        path: "verify-email",
+        element: (
+          <RedirectIfAuth>
+            <VerifyEmail />
           </RedirectIfAuth>
         ),
       },
@@ -74,7 +92,14 @@ export const router = createBrowserRouter([
         path: "lots/user/:userId",
         element: <ShowLotByIdPage />,
       },
-
+      {
+        path: "limited",
+        element: <DeletedOrBannedPage />,
+      },
+      {
+        path: "request-recovery",
+        element: <RequestRecoveryPage />,
+      },
       {
         element: <ProtectedRoute />,
         children: [
@@ -130,6 +155,11 @@ export const router = createBrowserRouter([
               { path: "request/:id", element: <RequestAboutId /> },
               { path: "requests", element: <ShowActiveRequests /> },
               { path: "requests/history", element: <RequestsHistory /> },
+              { path: "recovery-requests", element: <ShowActiveAppeals /> },
+              {
+                path: "recovery-requests/history",
+                element: <RecoverRequestsHistory />,
+              },
             ],
           },
         ],

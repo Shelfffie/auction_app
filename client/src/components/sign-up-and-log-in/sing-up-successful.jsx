@@ -10,6 +10,7 @@ function SuccessSignUp() {
         <p className="donut-on">DonutON</p>
       </Link>
       <label>Ви успішно зареєструвались!</label>
+      <label>Будь ласка, підтвердіть реєстрацію на вашому email.</label>
       <Link to="/log-in">
         <p className="Log-sign-in">Увійти</p>
       </Link>

@@ -93,6 +93,20 @@ body {
   color: #554332;
 }
 
+.payment-lot-button {
+  width: 100px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: #554332;
+  color: #fff2dd;
+}
+
+.payment-lot-button:hover {
+  background-color: #6d5640;
+  transition: all 0.3s ease;
+}
+
 .send-message-button {
   border-radius: 5px;
   background-color: rgb(212, 192, 156);

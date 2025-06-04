@@ -80,7 +80,7 @@ function LogInForm() {
       }
     } catch (error) {
       console.error("Login error: ", error);
-      alert("щОСЬ НЕ ТАК!!!!!!");
+      alert("Щось пішло не так.");
     }
   };
 

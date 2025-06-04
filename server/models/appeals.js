@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/bd-config.js");
 
-const Bids = sequelize.define(
-  "Bids",
+const Appeals = sequelize.define(
+  "Appeals",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,27 +12,31 @@ const Bids = sequelize.define(
     },
     user_id: {
       type: DataTypes.INTEGER,
+      references: {
+        model: "Users",
+        key: "id",
+      },
       allowNull: false,
     },
-    auction_id: {
-      type: DataTypes.INTEGER,
+    description: {
+      type: DataTypes.TEXT,
       allowNull: false,
     },
-    amount: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
+    status: {
+      type: DataTypes.ENUM("pending", "approved", "rejected"),
+      defaultValue: "pending",
     },
     created_at: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
       defaultValue: DataTypes.NOW,
     },
   },
   {
-    tableName: "bids",
+    tableName: "appeals",
     timestamps: false,
     underscored: true,
   }
 );
 
-module.exports = { Bids };
+module.exports = { Appeals };

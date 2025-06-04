@@ -1,4 +1,5 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { Users } = require("../models");
 
@@ -12,7 +13,6 @@ const {
 
 const { registerUser, loginUser } = require("../controllers/authControllers");
 const { profileContr } = require("../controllers/profileControllers.js");
-const verifyToken = require("../middlewares/authMiddleware");
 
 const {
   LotContrl,
@@ -25,13 +25,6 @@ const {
 
 const { addBid, getBiddsByAuction } = require("../controllers/bidsController");
 const { getUserProfile } = require("../controllers/anotherUserControl");
-
-const {
-  showLots,
-  showActiveLots,
-  showAllLots,
-  getWonLots,
-} = require("../controllers/showLotsControl");
 
 const {
   showCreatedLots,
@@ -51,11 +44,72 @@ const {
 } = require("../controllers/admin/lotControl");
 const upload = require("../middlewares/uploadMiddlewares");
 const requestsPhoto = require("../middlewares/requestsMiddlewares");
+
 const verifyAdmin = require("../middlewares/requireAdmin");
+const verifyToken = require("../middlewares/authMiddleware");
+
 const {
   sendMessage,
   getMessage,
 } = require("../controllers/messagesControllers");
+
+const {
+  showLots,
+  showActiveLots,
+  showAllLots,
+  getWonLots,
+} = require("../controllers/showLotsControl");
+
+const { recoverAcount } = require("../controllers/accountStatusController");
+
+const {
+  NewRecoveryController,
+  GetUserAppeal,
+} = require("../controllers/requestRecoverController");
+
+const {
+  GetAllAppeals,
+  showActiveAppeals,
+  changeAppealStatus,
+} = require("../controllers/admin/appeals.Control");
+
+router.get("/active-recover-list", verifyToken, verifyAdmin, showActiveAppeals);
+router.put(
+  "/active-recover-list",
+  verifyToken,
+  verifyAdmin,
+  changeAppealStatus
+);
+router.get("/recover-history", verifyToken, verifyAdmin, GetAllAppeals);
+
+router.post("/new-recover", verifyToken, NewRecoveryController);
+router.get("/user-appeal", verifyToken, GetUserAppeal);
+
+router.put("/recover-deleted", verifyToken, recoverAcount);
+
+router.get("/verify-email", async (req, res) => {
+  const { token } = req.query;
+
+  try {
+    const decoded = jwt.verify(token, process.env.EMAIL_SECRET);
+    const user = await Users.findByPk(decoded.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Користувача не знайдено." });
+    }
+
+    if (user.status !== "unverified") {
+      return res.status(400).json({ message: "Пошта вже підтверджена." });
+    }
+
+    user.status = "active";
+    await user.save();
+
+    res.status(200).json({ message: "Пошта успішно підтверджена!" });
+  } catch (error) {
+    res.status(400).json({ message: "Недійсний або прострочений токен." });
+  }
+});
 
 router.get("/won/:userId", getWonLots);
 router.post("/lot/:id/pay", verifyToken, payLotController);
@@ -109,6 +163,7 @@ router.get("/profile", verifyToken, async (req, res) => {
       name: user.name,
       created_at: user.created_at,
       user_role: user.role,
+      status: user.status,
     });
   } catch (error) {
     res.status(500).json({ message: "Помилка сервера", error: error.message });

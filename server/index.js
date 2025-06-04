@@ -7,6 +7,7 @@ const authRoutes = require("./routes/routes");
 const path = require("path");
 const app = express();
 require("./models/cron/updateLotStatus");
+require("./models/cron/checkPaymentStatus");
 
 app.use(cors());
 app.use(express.json());

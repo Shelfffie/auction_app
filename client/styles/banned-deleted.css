@@ -1,0 +1,56 @@
+.limited-div {
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-sizing: border-box;
+  min-height: 400px;
+  background-color: #fff2dd;
+  color: #4a3b2d;
+}
+
+.limited-div button {
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  width: 200px;
+  background-color: #6d5640;
+  color: #fff2dd;
+}
+
+.limited-div button:hover {
+  background-color: #4a3b2d;
+  transition: all 0.3s ease;
+}
+
+.appeal-div {
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 800px;
+  padding: 20px;
+  color: #fff2dd;
+  background-color: #6d5640;
+}
+
+.textarea-recovery {
+  border: none;
+  border-radius: 5px;
+  width: 700px;
+  background-color: rgb(212, 192, 156);
+  color: #554332;
+}
+
+.textarea-recovery::placeholder {
+  color: #554332;
+}
+
+.another-one-request {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  margin-bottom: 50px;
+}

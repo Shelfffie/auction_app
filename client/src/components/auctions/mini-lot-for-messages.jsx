@@ -48,7 +48,7 @@ const LotDiv = () => {
         {lotData?.payment_status === "unpaid" &&
         user?.id !== lotData?.creator?.userId ? (
           <Link to={`/lot/${auctionId}/payment`}>
-            <button>Оплатити</button>
+            <button className="payment-lot-button">Оплатити</button>
           </Link>
         ) : (
           ""

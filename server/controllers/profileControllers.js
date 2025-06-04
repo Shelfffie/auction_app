@@ -11,8 +11,9 @@ const profileContr = async (req, res) => {
 
     const user = await Users.findByPk(req.user.id);
 
-    if (!user)
+    if (!user) {
       return res.status(404).json({ message: "Користувача не знайдено" });
+    }
 
     if (name) user.name = name;
     await user.save();
