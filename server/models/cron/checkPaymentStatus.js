@@ -1,5 +1,5 @@
 const cron = require("node-cron");
-const { Lots, Bids, Users, Messages } = require("../lots");
+const { Users, Lots, Bids, Messages } = require("../");
 const { Op } = require("sequelize");
 
 cron.schedule("0 0 * * *", async () => {
@@ -37,33 +37,24 @@ cron.schedule("0 0 * * *", async () => {
 
         await Bids.destroy({ where: { auction_id: lot.id, user_id: userId } });
 
-        await Bids.destroy({
-          where: {
-            auction_id: { [Op.in]: activeAuctionIds },
-            user_id: userId,
-          },
-        });
-
+        if (activeAuctionIds.length > 0) {
+          await Bids.destroy({
+            where: {
+              auction_id: { [Op.in]: activeAuctionIds },
+              user_id: userId,
+            },
+          });
+        }
         await Messages.destroy({
           where: {
             auction_id: lot.id,
           },
         });
 
-        const newLatestBid = await Bids.findOne({
-          where: { auction_id: lot.id },
-          order: [["created_at", "DESC"]],
-        });
+        lot.status = "cancelled";
+        await lot.save();
 
-        if (newLatestBid) {
-          lot.end_time = now;
-          await lot.save();
-        } else {
-          if (!newLatestBid) {
-            lot.status = "canceled";
-            await lot.save();
-          }
-        }
+        console.log(`Лот #${lot.id} скасовано, користувача забанено.`);
       }
     }
   } catch (error) {

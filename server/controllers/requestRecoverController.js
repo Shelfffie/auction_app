@@ -1,4 +1,4 @@
-const { Appeals } = require("../models");
+const { Appeals, Users } = require("../models");
 
 const NewRecoveryController = async (req, res) => {
   try {
@@ -11,9 +11,10 @@ const NewRecoveryController = async (req, res) => {
     console.log("BODY:", req.body);
     const { description } = req.body;
     const user_id = req.user.id;
-    const user_status = req.user.status;
 
-    if (user_status != "banned") {
+    const userInfo = await Users.findOne({ where: { id: user_id } });
+
+    if (!userInfo || userInfo.status !== "banned") {
       return res.status(403).json({
         message: "Тільки заблоковані користувачі можуть надсилати заявки.",
       });

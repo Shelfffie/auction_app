@@ -1,5 +1,5 @@
 const verifyAdmin = (req, res, next) => {
-  if (req.user.user_role !== "admin") {
+  if (req.user.role !== "admin") {
     return res.status(403).json({ message: "Немає прав доступу" });
   }
   next();

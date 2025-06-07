@@ -5,13 +5,15 @@
 .app-description {
   display: flex;
   justify-content: space-between;
-  height: 754px;
+  flex-wrap: wrap;
+  height: auto;
   background-color: #6e8566;
+  padding-top: 308px;
 }
 
 .platform-description {
-  padding-top: 308px;
   padding-left: 70px;
+  max-width: 850px;
 }
 
 .about-title {
@@ -22,6 +24,9 @@
 
 .about-text {
   color: #fff2dd;
+  overflow-wrap: break-word;
+  word-break: normal;
+  white-space: normal;
   font-size: 25px;
 }
 
@@ -31,25 +36,39 @@
 }
 
 .photo1-container {
-  padding-top: 270px;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .currents-lots {
   margin: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: auto;
   background-color: #6d5640;
-  height: 625px;
+  max-width: 1521px;
   width: 100%;
 }
 
 .lots-tittle {
+  display: flex;
   padding: 80px 0 70px 100px;
+  flex-wrap: wrap;
+  text-align: center;
 }
 
 .buttons-lots {
   display: flex;
+  width: 100%;
   gap: 50px;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  padding-bottom: 30px;
 }
 
 .block-for-lot {
@@ -67,7 +86,12 @@
 }
 
 .block-for-lot h3 {
-  margin-right: 20%;
+  margin-right: 18%;
+}
+
+.description-current-lot {
+  max-height: 250px;
+  height: 100%;
 }
 
 .organizer-block {
@@ -93,8 +117,8 @@
   border: 2px solid #6d5640;
   border-radius: 5px;
   object-fit: cover;
-  height: 150px;
-  width: 200px;
+  max-height: 150px;
+  max-width: 200px;
 }
 
 .current-user-pic {
@@ -110,10 +134,21 @@
   height: 290px;
   box-sizing: border-box;
   padding: 20px;
-  width: 406px;
+  max-width: 406px;
+  width: 100%;
   border-radius: 12px;
   box-shadow: 10px 10px 10px #4f3e2f;
   transition: all 0.3s ease;
+}
+
+.look-for-all {
+  background-color: #fffcf8;
+  height: 290px;
+  box-sizing: border-box;
+  width: 400px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 10px 10px 10px #4f3e2f;
 }
 
 .auctions-block-div:hover {
@@ -123,11 +158,13 @@
 
 .look-add-buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 160px;
   align-items: center;
   justify-content: center;
-  height: 754px;
+  height: auto;
   background-color: #6e8566;
+  padding: 50px;
 }
 
 .block-for-photo-image {
@@ -135,7 +172,8 @@
   flex-direction: column;
   align-items: center;
   background-color: #6d5640;
-  padding: 15px;
+  max-width: 470px;
+  padding: 20px;
   box-shadow: 10px 10px 10px rgb(3, 30, 11, 0.5);
   transition: transform 0.3s ease;
 }
@@ -145,24 +183,25 @@
 }
 
 .donut-image {
-  height: 450px;
+  max-height: 450px;
 }
 
 .about-auctions {
   position: relative;
   box-sizing: border-box;
-  padding-left: 90px;
-  padding-top: 50px;
+  padding: 50px 0 90px 90px;
   background-color: #6e8566;
   width: 100%;
-  height: 850px;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .mini-brown-block {
   box-sizing: border-box;
   margin-left: -90px;
   background-color: #6d5640;
-  padding: 10px 90px 10px 90px;
+  padding: 10px 10px 10px 90px;
 }
 
 .buttons-about-sections {
@@ -202,7 +241,8 @@
 
 .two-hands-png {
   position: absolute;
-  height: 707px;
+  height: auto;
+
   left: 700px;
   z-index: 20;
 }
@@ -210,8 +250,10 @@
 .Faq {
   position: relative;
   display: flex;
+  align-items: center;
   width: 100%;
   min-height: 770px;
+  height: auto;
   background-color: #6d5640;
 }
 .about-title {
@@ -220,21 +262,24 @@
 
 .questions-png {
   position: absolute;
-  height: 700px;
+  max-height: 700px;
+  height: auto;
+  width: 30%;
 }
 
 .questions-sector {
-  width: 1001px;
-  margin-left: 512px;
+  max-width: 1500px;
+  width: 70%;
+  margin-left: auto;
 }
 
 .question {
   box-sizing: border-box;
   background-color: #fff2dd;
   border-radius: 5px;
-  width: 100%;
-  min-height: 90px;
+  min-height: 150px;
   max-height: 0px;
+  width: 100%;
   cursor: pointer;
   font-size: 38px;
   color: #554332;
@@ -262,7 +307,123 @@
   background-color: #6d5640;
   color: #fff2dd;
   font-size: 28px;
-  min-height: 200px;
-  padding: 10px 20px 0 20px;
+  min-height: 0;
+  padding: 0 20px;
   border-radius: 5px 0 0 0;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+}
+
+.details-content.visible {
+  max-height: 500px;
+  padding: 10px 20px;
+}
+
+@media (max-width: 778px) {
+  .app-description {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+    padding-top: 200px;
+  }
+
+  .platform-description {
+    padding-left: 0px;
+    max-width: 100%;
+  }
+
+  .about-title {
+    word-wrap: break-word;
+    white-space: normal;
+    font-size: 36px;
+  }
+
+  .about-text {
+    word-wrap: break-word;
+    white-space: normal;
+    font-size: 18px;
+  }
+
+  .photo1-container {
+    display: none;
+  }
+
+  .auctions-block-div {
+    height: 250px;
+    width: 90%;
+  }
+
+  .look-for-all {
+    height: 250px;
+    width: 338px;
+  }
+
+  .lots-tittle {
+    padding-left: 0px;
+  }
+
+  .look-add-buttons {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .block-for-photo-image {
+    width: 98%;
+    height: auto;
+    padding: 10px;
+  }
+
+  .donut-image {
+    max-height: 250px;
+  }
+
+  .about-auctions {
+    padding: 50px 0 50px 20px;
+  }
+
+  .two-hands-png {
+    display: none;
+  }
+
+  .about-text-brown {
+    word-wrap: break-word;
+    white-space: normal;
+    font-size: 18px;
+  }
+
+  .button-about {
+    width: 150px;
+  }
+
+  .questions-png {
+    display: none;
+  }
+
+  .questions-sector {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 15px;
+    max-width: 100%;
+  }
+
+  .question {
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+
+  .details-content {
+    padding: 10px;
+    font-size: 18px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .details-content.visible {
+    width: 98%;
+  }
 }

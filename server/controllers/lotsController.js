@@ -1,11 +1,17 @@
-const { Lots, Users } = require("../models");
+const { Lots, Users, Bids } = require("../models");
 
 const LotContrl = async (req, res) => {
   const { title, description, start_price, start_time, end_time } = req.body;
   const creator_id = req.user.id;
   const imageFile = req.file;
   try {
-    if (req.user.user_role !== "admin" && req.user.user_role !== "organizer") {
+    const user = await Users.findByPk(creator_id);
+
+    if (!user) {
+      return res.status(404).json({ message: "Користувача не знайдено" });
+    }
+
+    if (user.role !== "admin" && user.role !== "organizer") {
       return res.status(403).json({ message: "Немає прав на створення лотів" });
     }
 
@@ -129,13 +135,13 @@ const editLotContrl = async (req, res) => {
     console.log("USER:", req.user);
     console.log("LOT:", lot.creator_id);
 
-    if (req.user.user_role !== "admin" && req.user.id !== lot.creator_id) {
+    if (req.user.role !== "admin" && req.user.id !== lot.creator_id) {
       return res
         .status(403)
         .json({ message: "Немає прав на редагування цього лоту" });
     }
 
-    if (lot.status === "ended" && req.user.user_role !== "admin") {
+    if (lot.status === "ended" && req.user.role !== "admin") {
       return res
         .status(400)
         .json({ message: "Лот завершено — редагування заборонено" });
@@ -161,10 +167,10 @@ const editLotStatus = async (req, res) => {
     if (!lot) {
       return res.status(404).json({ message: "Лот не знайдено" });
     }
-    if (req.user.user_role !== "admin" && req.user.id !== lot.creator_id) {
+    if (req.user.role !== "admin" && req.user.id !== lot.creator_id) {
       return res.status(403).json({ message: "Немає прав на зміну статусу" });
     }
-    if (lot.status === "ended" && req.user.user_role !== "admin") {
+    if (lot.status === "ended" && req.user.role !== "admin") {
       return res
         .status(400)
         .json({ message: "Лот завершено — редагування заборонено" });
@@ -191,7 +197,7 @@ const delLotCntrl = async (req, res) => {
       return res.status(404).json({ message: "Лот не знайдено" });
     }
 
-    if (req.user.user_role !== "admin" && req.user.id !== lot.creator_id) {
+    if (req.user.role !== "admin" && req.user.id !== lot.creator_id) {
       return res.status(403).json({ message: "Немає прав видалити цей лот" });
     }
 
@@ -205,6 +211,8 @@ const delLotCntrl = async (req, res) => {
 
 const payLotController = async (req, res) => {
   const { id } = req.params;
+  const { amount, fundId } = req.body;
+  const userId = req.user?.id;
 
   try {
     const lot = await Lots.findByPk(id);
@@ -215,6 +223,15 @@ const payLotController = async (req, res) => {
 
     if (lot.payment_status === "paid") {
       return res.status(400).json({ message: "Лот уже оплачений" });
+    }
+
+    const lastBid = await Bids.findOne({
+      where: { auction_id: id },
+      order: [["created_at", "DESC"]],
+    });
+
+    if (!lastBid || lastBid.user_id !== userId) {
+      return res.status(403).json({ message: "Ви не є переможцем лоту" });
     }
 
     lot.payment_status = "paid";

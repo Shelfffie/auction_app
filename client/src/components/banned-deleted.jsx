@@ -4,9 +4,14 @@ import { useAuth } from "../hooks/authContext";
 import "../../styles/banned-deleted.css";
 
 const DeletedOrBannedPage = () => {
-  const { user, setUser } = useAuth();
+  const { user, setUser, logOut } = useAuth();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+
+  const handleLogout = () => {
+    logOut();
+    navigate("/");
+  };
 
   const recoverAccount = async () => {
     const confirm = window.confirm("Відновити акаунт?");
@@ -51,12 +56,13 @@ const DeletedOrBannedPage = () => {
   if (user?.status === "banned") {
     return (
       <div className="limited-div">
-        <h1>Ваш акаунт заблоковано!</h1>
+        <h1>Ваш обліковий запис заблоковано!</h1>
         <p>
           Якщо ви вважаєте що це помилка, ви можете подати заявку на
           відновлення.
         </p>
         <button onClick={handleRequestRecovery}>Подати заявку</button>
+        <button onClick={handleLogout}>Вийти з облікового запису</button>
       </div>
     );
   }
@@ -64,9 +70,10 @@ const DeletedOrBannedPage = () => {
   if (user?.status === "deleted") {
     return (
       <div className="limited-div">
-        <h1>Ваш акаунт деактивований!</h1>
+        <h1>Ваш обліковий запис деактивовано!</h1>
         <p>Ви можете відновити його.</p>
-        <button onClick={recoverAccount}>Відновити акаунт</button>
+        <button onClick={recoverAccount}>Відновити обліковий запис</button>
+        <button onClick={handleLogout}>Вийти з облікового запису</button>
       </div>
     );
   }

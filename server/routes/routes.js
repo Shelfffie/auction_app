@@ -12,7 +12,10 @@ const {
 } = require("../controllers/verifyController");
 
 const { registerUser, loginUser } = require("../controllers/authControllers");
-const { profileContr } = require("../controllers/profileControllers.js");
+const {
+  profileContr,
+  deleteUserContr,
+} = require("../controllers/profileControllers.js");
 
 const {
   LotContrl,
@@ -170,10 +173,8 @@ router.get("/profile", verifyToken, async (req, res) => {
   }
 });
 
-router.put("/profile", verifyToken, (req, res) => {
-  console.log("Put");
-  profileContr(req, res);
-});
+router.patch("/profile", verifyToken, profileContr);
+router.put("/profile/delete", verifyToken, deleteUserContr);
 
 router.get("/lots/latest", (req, res) => {
   console.log("Показати 2 останні аук");

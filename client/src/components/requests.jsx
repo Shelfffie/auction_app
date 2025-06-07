@@ -44,7 +44,6 @@ const NewRequest = () => {
       const response = await fetch("http://localhost:3000/api/request", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: formData,

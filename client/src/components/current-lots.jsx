@@ -52,7 +52,7 @@ function CurrentLots() {
                     />
                     <h3>{lot.title}</h3>
                   </div>
-                  <div>
+                  <div className="description-current-lot">
                     <p>{lot.description}</p>
                   </div>
                   <div className="organizer-block">
@@ -67,7 +67,9 @@ function CurrentLots() {
               </Link>
             ))}
             <Link to="lots">
-              <p className="auctions-block-div">Переглянути всі...</p>
+              <div className="look-for-all">
+                <p>Переглянути всі...</p>
+              </div>
             </Link>
           </>
         )}

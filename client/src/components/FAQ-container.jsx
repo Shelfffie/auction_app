@@ -19,7 +19,8 @@ function FAQ() {
     },
     {
       question: "Як я дізнаюся, що виграв ставку?",
-      answer: "Потом",
+      answer:
+        "Після закінчення аукціону всім учасникам надійне сповіщення про завершення аукціона на пошту. Перевіривши можна дізнатися!",
     },
     {
       question: "Що робити після виграша лота?",
@@ -50,9 +51,13 @@ function FAQ() {
               className={`question ${openIndex === index ? "open" : ""}`}
               onClick={() => clicked(index)}
             >
-              <div className="summaryquestion">{faq.question}</div>
+              <div className="question-blick">{faq.question}</div>
               {openIndex === index && (
-                <div className="details-content">
+                <div
+                  className={`details-content ${
+                    openIndex === index ? "visible" : ""
+                  }`}
+                >
                   <p>{faq.answer}</p>
                 </div>
               )}

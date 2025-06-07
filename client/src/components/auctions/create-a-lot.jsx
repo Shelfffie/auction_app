@@ -133,7 +133,7 @@ const CreateLot = () => {
           <textarea
             rows="5"
             cols="40"
-            className="input-name-des textarea"
+            className="input-name-des textarea-desctiption"
             placeholder="Введіть опис товару"
             onChange={(e) => setDescription(e.target.value)}
             required
@@ -141,7 +141,7 @@ const CreateLot = () => {
         </div>
       </div>
       <div className="block-for-time-etc">
-        <div>
+        <div className="time-block-create">
           <p>Початок аукціону</p>
           <input
             type="datetime-local"

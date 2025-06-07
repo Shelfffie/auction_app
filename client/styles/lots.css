@@ -8,7 +8,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
   border: none;
+  gap: 50px;
+  max-width: 1920px;
+  width: 100%;
   padding-top: 164px;
   margin: 0;
   background-color: #6e8566;
@@ -38,11 +42,14 @@ body {
 }
 
 .phono-name {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   color: #554332;
   font-size: 25px;
   display: flex;
   gap: 50px;
-  margin: 50px;
 }
 
 .photo-container {
@@ -81,18 +88,19 @@ body {
   flex-direction: column;
   align-items: center;
   height: 500px;
-  width: 700px;
+  max-width: 700px;
+  padding: 20px;
   border-radius: 5px;
   background-color: #fff2dd;
 }
 
 .name-description p {
-  margin-right: 300px;
+  margin-right: auto;
 }
 
 .input-name-des {
   height: 40px;
-  width: 600px;
+  width: 100%;
   border-radius: 5px;
   color: #554332;
   background-color: rgb(212, 192, 156);
@@ -103,25 +111,35 @@ body {
   color: #554332;
 }
 
-.textarea {
+.textarea-desctiption {
+  width: 650px;
   height: 200px;
 }
 
 .block-for-time-etc {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
   padding: 50px;
   color: #554332;
   font-size: 25px;
   min-height: 500px;
   border-radius: 5px;
   background-color: #fff2dd;
-  width: 1150px;
+  max-width: 1150px;
+  width: 100%;
+}
+
+.time-block-create {
+  width: 60%;
 }
 
 .container-for-button {
-  padding-top: 300px;
-  padding-left: 100px;
+  margin-top: auto;
+  padding-top: 20px;
+  margin-bottom: 35px;
+  margin-left: 50px;
   display: flex;
   justify-content: center;
 }
@@ -139,4 +157,38 @@ body {
 .create-a-lot-button:hover {
   background-color: #50614b;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding-top: 120px;
+  }
+  .create-lot-text {
+    font-size: 32px;
+  }
+  .phono-name {
+    font-size: 18px;
+    margin: 0;
+  }
+  .name-description {
+    width: 100%;
+  }
+  .block-for-time-etc {
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    padding: 10px;
+  }
+  .create-a-lot-button {
+    font-size: 18px;
+    width: 200px;
+  }
+  .textarea-desctiption {
+    width: 100%;
+  }
+  .container-for-button {
+    padding: 0;
+  }
 }

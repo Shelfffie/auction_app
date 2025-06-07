@@ -169,7 +169,7 @@ const LotId = () => {
     const end = new Date(editedData.endTime);
     const price = parseFloat(editedData.startedPrice);
 
-    if (start < now) {
+    if (lotData.status !== "ended" && start < now) {
       alert("Дата початку не може бути в минулому.");
       return;
     }
@@ -276,7 +276,7 @@ const LotId = () => {
   };
 
   return (
-    <div className="page-container">
+    <div className="page-container-lot-id">
       <div className="phono-name">
         <div className="container-for-photo">
           <img

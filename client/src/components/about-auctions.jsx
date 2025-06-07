@@ -28,8 +28,8 @@ function AboutAuctions() {
       </div>
       <p className="about-text-brown">3. Завершення</p>
       <p className="about-text">
-        По завершенню - переможець отримує лот, <br /> а виграні кошти
-        передаються на <br />
+        По завершенню - переможець отримує лот, а<br />
+        виграні кошти передаються на <br />
         доброчинну мету.
       </p>
       <div className="buttons-about-sections">

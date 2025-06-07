@@ -1,6 +1,7 @@
 const cron = require("node-cron");
 const { Lots } = require("../lots");
 const { Op } = require("sequelize");
+const { sendNotification } = require("./EndedAuctionNotification");
 
 cron.schedule("*/1 * * * *", async () => {
   const now = new Date();
@@ -27,6 +28,8 @@ cron.schedule("*/1 * * * *", async () => {
         },
       }
     );
+
+    await sendNotification();
 
     await Lots.update(
       { status: "pending" },

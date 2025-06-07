@@ -2,23 +2,24 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
   background-color: #fff2dd;
   color: #3d2712;
+  max-width: 1920px;
   width: 100%;
   min-height: 703px;
+  padding-top: 170px;
 }
 
 .profile-icon {
-  margin-left: 100px;
-  margin-top: 50px;
-  width: 270px;
+  max-width: 270px;
+  margin-left: 30px;
   border-radius: 5px;
   border: 13px solid #6d5640;
 }
 
 .general-information {
-  padding-top: 170px;
   height: 100%;
   margin-left: 100px;
 }
@@ -52,8 +53,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 400px;
+  margin-left: auto;
   margin-bottom: 188px;
+}
+
+.edit-delete-block {
+  display: flex;
+  flex-direction: column;
 }
 
 .edit-profile {
@@ -68,7 +74,10 @@
 .div-for-profile-buttons {
   display: flex;
   justify-content: center;
-  height: 400px;
+  flex-wrap: wrap;
+  max-width: 1920px;
+  width: 100%;
+  min-height: 400px;
   background-color: #6e8566;
 }
 
@@ -109,4 +118,35 @@
   color: #3d2712;
   background-color: rgb(212, 192, 156);
   border: none;
+}
+
+@media (max-width: 768px) {
+  .profile-info {
+    flex-direction: column;
+  }
+  .big-text {
+    font-size: 24px;
+  }
+  .personal-info {
+    font-size: 20px;
+  }
+  .profile-icon {
+    margin-left: 0;
+  }
+  .general-information {
+    margin-left: 0;
+  }
+  .edit-block {
+    margin-left: 20px;
+    margin-right: auto;
+  }
+  .div-for-profile-buttons {
+    align-items: center;
+    gap: 10px;
+  }
+  .menu-button {
+    height: 50px;
+    font-size: 18px;
+    margin: 0;
+  }
 }

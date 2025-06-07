@@ -92,7 +92,7 @@ function ShowLots() {
                 </p>
 
                 <h4 className="cell cell7">
-                  Статус: {auctionStatus[lot.status]}
+                  Статус аукціону: {auctionStatus[lot.status]}
                 </h4>
                 <p className="cell cell8">
                   {lot.status === "pending"

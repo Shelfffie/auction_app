@@ -39,7 +39,7 @@ const WonLots = () => {
         {wonLots.length === 0 ? (
           <p className="looks-for-lots">Поки немає лотів</p>
         ) : (
-          <ul>
+          <>
             {wonLots.map((lot) => (
               <Link to={`/lot/${lot.id}`} key={lot.id}>
                 <div className="lot-item-show">
@@ -60,7 +60,7 @@ const WonLots = () => {
                 </div>
               </Link>
             ))}
-          </ul>
+          </>
         )}
       </div>
     </div>

@@ -8,10 +8,12 @@ import "../../../styles/payment-choose.css";
 const ChoosePayment = () => {
   const navigate = useNavigate();
   const { auctionId } = useParams();
+  const [bids, setBids] = useState([]);
   const { user } = useAuth();
   const [lotData, setLotData] = useState(null);
   const [selectedFund, setSelectedFund] = useState(null);
   const [isPaid, setIsPaid] = useState(false);
+  const [lastBid, setLastBid] = useState(null);
   const [funds, setFunds] = useState([
     {
       id: 1,
@@ -59,7 +61,10 @@ const ChoosePayment = () => {
             "Content-Type": "application/json",
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
-          body: JSON.stringify({}),
+          body: JSON.stringify({
+            amount: lastBid?.amount,
+            fundId: selectedFund?.id,
+          }),
         }
       );
 
@@ -75,6 +80,31 @@ const ChoosePayment = () => {
       console.log("Помилка запиту:", error);
     }
   };
+
+  useEffect(() => {
+    const fetchBids = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/lot/${auctionId}/bids`
+        );
+        if (!response.ok) throw new Error("Не вдалося отримати ставки");
+        const data = await response.json();
+        setBids(data);
+
+        if (data.length > 0) {
+          const lastBid = data.reduce((latest, bid) =>
+            new Date(bid.created_at) > new Date(latest.created_at)
+              ? bid
+              : latest
+          );
+          setLastBid(lastBid);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchBids();
+  }, [auctionId]);
 
   return (
     <div className="all-page">
@@ -108,7 +138,7 @@ const ChoosePayment = () => {
                       <h3>Ви обрали фонд: {fund.title}</h3>
                       <p>
                         Сума до оплати:{" "}
-                        <strong>{lotData?.start_price || 0} грн</strong>
+                        <strong>{lastBid?.amount || 0} грн</strong>
                       </p>
                     </div>
                     <button onClick={handlePayment} className="payment-button">

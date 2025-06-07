@@ -9,6 +9,29 @@ function ProfilePage() {
     lastname: "",
   });
 
+  const deleteAccount = async () => {
+    const confirm = window.confirm(
+      "Ви впевнені, що хочете видалити обліковий запис? Всі ваші ставки та лоти будуть видалені безслідно."
+    );
+    if (!confirm) return;
+    try {
+      const response = await fetch(`http://localhost:3000/api/profile/delete`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ status: "deleted" }),
+      });
+
+      if (!response.ok) throw new Error("Не вдалося видалити акаунт.");
+
+      window.location.reload();
+    } catch (err) {
+      console.error("Помилка видалення:", err);
+    }
+  };
+
   useEffect(() => {
     fetch(`http://localhost:3000/api/profile`, {
       method: "GET",
@@ -50,7 +73,7 @@ function ProfilePage() {
       };
 
       const response = await fetch("http://localhost:3000/api/profile", {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -61,8 +84,17 @@ function ProfilePage() {
       if (!response.ok) {
         throw new Error("Не вдалося оновити профіль");
       }
-      const data = await response.json();
-      setUserData(data);
+      const refetch = await fetch("http://localhost:3000/api/profile", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+
+      if (!refetch.ok) throw new Error("Не вдалося отримати оновлений профіль");
+
+      const freshUser = await refetch.json();
+      setUserData(freshUser);
       setIsEditing(false);
     } catch (error) {
       console.log("Помилка збереження профілю:", error);
@@ -134,12 +166,18 @@ function ProfilePage() {
             Зберегти зміни
           </p>
         ) : (
-          <p
-            className="edit-profile big-text"
-            onClick={() => setIsEditing(true)}
-          >
-            Редагувати
-          </p>
+          <div className="edit-delete-block">
+            {" "}
+            <p
+              className="edit-profile big-text"
+              onClick={() => setIsEditing(true)}
+            >
+              Редагувати
+            </p>
+            <p className="edit-profile big-text" onClick={deleteAccount}>
+              Видалити аккаунт
+            </p>
+          </div>
         )}
       </div>
     </div>
