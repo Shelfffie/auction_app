@@ -18,6 +18,11 @@ const Users = sequelize.define(
       allowNull: false,
       unique: true,
     },
+    profile_icon: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "/icons/null-icon.jpg",
+    },
     password_hash: {
       type: DataTypes.STRING(255),
       allowNull: false,

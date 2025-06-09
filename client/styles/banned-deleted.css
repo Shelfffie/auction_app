@@ -56,4 +56,6 @@
   align-items: center;
   justify-self: center;
   margin-bottom: 50px;
+  width: 100%;
+  max-width: 700px;
 }

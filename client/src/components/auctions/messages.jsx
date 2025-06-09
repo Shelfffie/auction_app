@@ -73,7 +73,6 @@ const MessageDiv = () => {
   useEffect(() => {
     if (!auctionId) return;
     socket.emit("joinRoom", auctionId);
-    console.log("Join room", auctionId);
 
     socket.on("newMessage", (message) => {
       setMessages((prev) => [...prev, message]);

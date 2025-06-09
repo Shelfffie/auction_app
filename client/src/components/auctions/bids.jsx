@@ -198,6 +198,7 @@ const BidsContainer = ({ creatorId, auctionStatus, lotId, startedPrice }) => {
                   </button>
                   <input
                     type="number"
+                    name="set-bit"
                     value={value}
                     className="set-bid-value"
                     onChange={(e) => setValue(Number(e.target.value))}

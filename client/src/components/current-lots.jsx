@@ -13,7 +13,6 @@ function CurrentLots() {
       try {
         const response = await fetch("http://localhost:3000/api/lots/latest");
         const data = await response.json();
-        console.log("DATA FROM API:", data);
         if (Array.isArray(data) && data.length > 0) {
           setLots(data);
         } else {
@@ -38,30 +37,32 @@ function CurrentLots() {
         ) : (
           <>
             {lots.map((lot) => (
-              <Link
-                to={`/lot/${lot.id}`}
-                className="auctions-block-div"
-                key={lot.id}
-              >
+              <Link to={`/lot/${lot.id}`} key={lot.id}>
                 <div className="block-for-lot">
-                  <div className="img-div">
-                    <img
-                      src={`http://localhost:3000${lot?.image_url}`}
-                      alt={lot.title}
-                      className="current-lots-img"
-                    />
-                    <h3>{lot.title}</h3>
-                  </div>
-                  <div className="description-current-lot">
-                    <p>{lot.description}</p>
-                  </div>
-                  <div className="organizer-block">
-                    <img
-                      src={defaulImage}
-                      alt=""
-                      className="current-user-pic"
-                    />
-                    <h4>{lot?.creator?.name}</h4>
+                  <div className="auctions-block-div">
+                    <div className="img-div">
+                      <img
+                        src={`http://localhost:3000${lot?.image_url}`}
+                        alt={lot.title}
+                        className="current-lots-img"
+                      />
+                      <p className="tittle-for-current-block">{lot.title}</p>
+                    </div>
+                    <div className="description-current-lot">
+                      <p>{lot.description}</p>
+                    </div>
+                    <div className="organizer-block">
+                      <img
+                        src={
+                          lot?.creator?.profile_icon
+                            ? `http://localhost:3000${lot?.creator?.profile_icon}`
+                            : defaulImage
+                        }
+                        alt=""
+                        className="current-user-pic"
+                      />
+                      <h4>{lot?.creator?.name}</h4>
+                    </div>
                   </div>
                 </div>
               </Link>

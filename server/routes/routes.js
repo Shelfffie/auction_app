@@ -47,6 +47,7 @@ const {
 } = require("../controllers/admin/lotControl");
 const upload = require("../middlewares/uploadMiddlewares");
 const requestsPhoto = require("../middlewares/requestsMiddlewares");
+const profileIcon = require("../middlewares/iconsMiddleware");
 
 const verifyAdmin = require("../middlewares/requireAdmin");
 const verifyToken = require("../middlewares/authMiddleware");
@@ -164,6 +165,7 @@ router.get("/profile", verifyToken, async (req, res) => {
       id: user.id,
       email: user.email,
       name: user.name,
+      profile_icon: user.profile_icon,
       created_at: user.created_at,
       user_role: user.role,
       status: user.status,
@@ -173,7 +175,7 @@ router.get("/profile", verifyToken, async (req, res) => {
   }
 });
 
-router.patch("/profile", verifyToken, profileContr);
+router.patch("/profile", verifyToken, profileIcon.single("icon"), profileContr);
 router.put("/profile/delete", verifyToken, deleteUserContr);
 
 router.get("/lots/latest", (req, res) => {

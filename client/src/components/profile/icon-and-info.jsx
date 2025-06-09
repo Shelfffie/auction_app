@@ -68,17 +68,21 @@ function ProfilePage() {
 
   const SaveChanges = async () => {
     try {
-      const updatedUser = {
-        name: `${editedData.firstname} ${editedData.lastname}`.trim(),
-      };
+      const formData = new FormData();
+      formData.append(
+        "name",
+        `${editedData.firstname} ${editedData.lastname}`.trim()
+      );
+      if (editedData.image) {
+        formData.append("icon", editedData.image);
+      }
 
       const response = await fetch("http://localhost:3000/api/profile", {
         method: "PATCH",
+        body: formData,
         headers: {
-          "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
-        body: JSON.stringify(updatedUser),
       });
 
       if (!response.ok) {
@@ -90,8 +94,6 @@ function ProfilePage() {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
-
-      if (!refetch.ok) throw new Error("Не вдалося отримати оновлений профіль");
 
       const freshUser = await refetch.json();
       setUserData(freshUser);
@@ -111,11 +113,27 @@ function ProfilePage() {
 
   return (
     <div className="profile-info">
-      <img
-        src="./../../../pics/null-donut.png"
-        alt=""
-        className="profile-icon"
-      />
+      <div className="div-for-profile-icon">
+        <img
+          src={
+            userData?.profile_icon
+              ? `http://localhost:3000${userData.profile_icon}`
+              : "./../../../pics/null-donut.png"
+          }
+          alt=""
+          className="profile-icon"
+        />
+        {isEditing && (
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={(e) =>
+              setEditedData({ ...editedData, image: e.target.files[0] })
+            }
+          />
+        )}
+      </div>
       <div className="general-information">
         <p className="big-text">Основна інформація:</p>
         <p>Ім'я</p>
@@ -132,9 +150,8 @@ function ProfilePage() {
         )}
         <p>Прізвище</p>
         {isEditing ? (
-          <textarea
-            rows="5"
-            cols="40"
+          <input
+            type="text"
             name="lastname"
             value={editedData.lastname}
             onChange={editChange}

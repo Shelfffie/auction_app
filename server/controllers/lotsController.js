@@ -68,7 +68,7 @@ const IdLots = async (req, res) => {
         {
           model: Users,
           as: "creator",
-          attributes: ["id", "name", "created_at"],
+          attributes: ["id", "name", "profile_icon", "created_at"],
         },
       ],
     });
@@ -93,6 +93,7 @@ const IdLots = async (req, res) => {
             userId: lot.creator.id,
             name: lot.creator.name,
             user_created: lot.creator.created_at,
+            profile_icon: lot.creator.profile_icon,
           }
         : null,
     });

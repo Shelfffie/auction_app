@@ -40,6 +40,7 @@ io.on("connection", (socket) => {
 
 app.use("/uploads", express.static(path.join(__dirname, "storage")));
 app.use("/requests", express.static(path.join(__dirname, "storage/requests")));
+app.use("/icons", express.static(path.join(__dirname, "storage/icons")));
 
 app.use("/api", authRoutes);
 

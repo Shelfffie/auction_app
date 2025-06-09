@@ -62,7 +62,11 @@ function ShowEndedLots() {
                 />
 
                 <img
-                  src={defaulImage}
+                  src={
+                    lot?.creator?.profile_icon
+                      ? `http://localhost:3000${lot?.creator?.profile_icon}`
+                      : defaulImage
+                  }
                   alt=""
                   className="user-pic-img cell cell4"
                 />

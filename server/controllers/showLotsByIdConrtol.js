@@ -24,13 +24,6 @@ const showCreatedLots = async (req, res) => {
         "end_time",
         "status",
       ],
-      include: [
-        {
-          model: Users,
-          as: "creator",
-          attributes: ["name"],
-        },
-      ],
     });
 
     if (lots.length === 0) {
@@ -91,7 +84,7 @@ const showBidsById = async (req, res) => {
         {
           model: Users,
           as: "creator",
-          attributes: ["id", "name", "created_at"],
+          attributes: ["id", "name", "created_at", "profile_icon"],
         },
         {
           model: Bids,

@@ -66,7 +66,11 @@ function UserProfilePage() {
   return (
     <div className="profile-info">
       <img
-        src="./../../../pics/null-donut.png"
+        src={
+          userData?.profile_icon
+            ? `http://localhost:3000${userData.profile_icon}`
+            : "./../../../pics/null-donut.png"
+        }
         alt=""
         className="profile-icon"
       />

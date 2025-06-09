@@ -12,7 +12,7 @@ const showLots = async (req, res) => {
         {
           model: Users,
           as: "creator",
-          attributes: ["id", "name"],
+          attributes: ["id", "name", "profile_icon"],
         },
       ],
     });
@@ -57,7 +57,7 @@ const showActiveLots = async (req, res) => {
         {
           model: Users,
           as: "creator",
-          attributes: ["id", "name", "created_at"],
+          attributes: ["id", "name", "created_at", "profile_icon"],
         },
       ],
     });
@@ -96,7 +96,7 @@ const showAllLots = async (req, res) => {
         {
           model: Users,
           as: "creator",
-          attributes: ["id", "name", "created_at"],
+          attributes: ["id", "name", "created_at", "profile_icon"],
         },
       ],
     });

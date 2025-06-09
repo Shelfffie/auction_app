@@ -124,6 +124,7 @@ const CreateLot = () => {
           <p>Назва</p>
           <input
             type="text"
+            name="tittle"
             placeholder="Введіть назву"
             className="input-name-des"
             onChange={(e) => setTitle(e.target.value)}
@@ -133,6 +134,7 @@ const CreateLot = () => {
           <textarea
             rows="5"
             cols="40"
+            name="description"
             className="input-name-des textarea-desctiption"
             placeholder="Введіть опис товару"
             onChange={(e) => setDescription(e.target.value)}
@@ -145,6 +147,7 @@ const CreateLot = () => {
           <p>Початок аукціону</p>
           <input
             type="datetime-local"
+            name="start"
             className="input-name-des"
             required
             onChange={(e) => setStartDate(e.target.value)}
@@ -152,6 +155,7 @@ const CreateLot = () => {
           <p>Кінець аукціону</p>
           <input
             type="datetime-local"
+            name="end"
             className="input-name-des"
             required
             onChange={(e) => setEndDate(e.target.value)}
@@ -160,6 +164,7 @@ const CreateLot = () => {
           <input
             type="number"
             className="input-name-des"
+            name="start-price"
             placeholder="Ведіть число, наприклад: 200"
             min="1"
             step="1"

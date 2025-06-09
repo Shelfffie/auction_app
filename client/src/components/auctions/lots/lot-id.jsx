@@ -169,7 +169,11 @@ const LotId = () => {
     const end = new Date(editedData.endTime);
     const price = parseFloat(editedData.startedPrice);
 
-    if (lotData.status !== "ended" && start < now) {
+    if (
+      lotData.status !== "ended" &&
+      lotData.status !== "active" &&
+      start < now
+    ) {
       alert("Дата початку не може бути в минулому.");
       return;
     }
@@ -274,6 +278,10 @@ const LotId = () => {
     ended: "Завершений",
     cancelled: "Відмінений",
   };
+
+  const userImageSrc = lotData?.creator?.profile_icon
+    ? `http://localhost:3000${lotData.creator.profile_icon}`
+    : defaultImage;
 
   return (
     <div className="page-container-lot-id">
@@ -404,7 +412,15 @@ const LotId = () => {
           </div>
           <p className="organizator-tittle">Організатор:</p>
           <div className="organizator-info">
-            <img src={defaulImage} alt="" className="user-pic" />
+            <img
+              src={
+                lotData?.creator?.profile_icon
+                  ? `http://localhost:3000${lotData?.creator?.profile_icon}`
+                  : defaulImage
+              }
+              alt=""
+              className="user-pic"
+            />
             <div className="name-and-data-user">
               <h2>
                 <Link

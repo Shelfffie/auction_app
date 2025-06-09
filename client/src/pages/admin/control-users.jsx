@@ -152,6 +152,7 @@ function UserControl() {
       <h1>КОРИСТУВАЧ</h1>
       <input
         type="text"
+        name="id"
         placeholder="Введіть ID користувача"
         value={searchId}
         onChange={(e) => setSearchId(e.target.value)}
@@ -166,17 +167,25 @@ function UserControl() {
           gap: "10px",
         }}
       >
-        <label>
+        <label name="id">
           ID:
-          <input type="text" value={userData.id} disabled />
+          <input name="id" type="text" value={userData.id} disabled />
         </label>
-        <label>
+        <label name="user-name">
           Name:
-          <input name="name" value={userData.name} onChange={handleChange} />
+          <input
+            name="user-name"
+            value={userData.name}
+            onChange={handleChange}
+          />
         </label>
-        <label>
+        <label name="user-email">
           Email:
-          <input name="email" value={userData.email} onChange={handleChange} />
+          <input
+            name="user-email"
+            value={userData.email}
+            onChange={handleChange}
+          />
         </label>
         <label>
           Role:
@@ -194,9 +203,10 @@ function UserControl() {
             <option value="banned">banned</option>
           </select>
         </label>
-        <label>
+        <label name="created_at">
           Created At:
           <input
+            name="created_at"
             value={
               userData.created_at
                 ? new Date(userData.created_at).toLocaleDateString(
@@ -208,9 +218,10 @@ function UserControl() {
             disabled
           />
         </label>
-        <label>
+        <label name="updated_at">
           Updated At:
           <input
+            name="updated_at"
             value={
               userData.updated_at
                 ? new Date(userData.updated_at).toLocaleDateString(

@@ -150,15 +150,6 @@ const RequestRecoveryPage = () => {
     );
   }
 
-  if (lastAppeal?.status === "approved") {
-    return (
-      <div className="limited-div">
-        <h2>Заявку схвалено</h2>
-        <p>Ваш акаунт вже відновлено.</p>
-      </div>
-    );
-  }
-
   if (appeals.length === 0) {
     return (
       <form method="POST" onSubmit={hadnleSubmit}>

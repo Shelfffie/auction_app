@@ -4,9 +4,10 @@ const { Users, Lots, Bids, Messages } = require("../models");
 
 const profileContr = async (req, res) => {
   const { name } = req.body;
+  const profile_icon = req.file;
 
   try {
-    if (!name) {
+    if (!name && !profile_icon) {
       return res.status(400).json({ message: "Немає даних для оновлення" });
     }
 
@@ -17,6 +18,7 @@ const profileContr = async (req, res) => {
     }
 
     if (name) user.name = name;
+    if (profile_icon) user.profile_icon = `/icons/${profile_icon.filename}`;
     await user.save();
 
     res.json(user);
