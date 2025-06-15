@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { useAuth } from "../hooks/authContext";
 import "../../styles/error-page.css";
+import "../../styles/banned-deleted.css";
+import ConfirmModal from "../components/alertModal";
 
 const RequestRecoveryPage = () => {
   const { user } = useAuth();
@@ -8,6 +10,10 @@ const RequestRecoveryPage = () => {
   const [appeals, setAppeals] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertMessage, setShowAlertMessage] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
     document.title = "Апеляція";
@@ -44,13 +50,15 @@ const RequestRecoveryPage = () => {
     e.preventDefault();
 
     if (!description) {
-      alert("Ви не можете відправити пусту заявку!");
+      setShowAlertMessage("Ви не можете відправити пусту заявку!");
+      setShowAlert(true);
       return;
     }
 
-    const confirm = window.confirm("Відправити заявку?");
-    if (!confirm) return;
+    setShowConfirm(true);
+  };
 
+  const requestToRecover = async () => {
     try {
       const response = await fetch("http://localhost:3000/api/new-recover", {
         method: "POST",
@@ -64,11 +72,15 @@ const RequestRecoveryPage = () => {
       if (!response.ok) {
         throw new Error("Не вдалося надіслати заявку");
       }
-      alert("Заявку надіслано успішно! Слідкуйте за оновленням.");
-      window.location.reload();
+      setShowAlertMessage("Заявку надіслано успішно! Слідкуйте за оновленням.");
+      setShowAlert(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error("Помилка надсилання заявки:", error);
-      alert("Виникла помилка при надсиланні заявки");
+      setShowAlertMessage("Виникла помилка при надсиланні заявки");
+      setShowAlert(true);
     }
   };
 
@@ -97,12 +109,31 @@ const RequestRecoveryPage = () => {
         {lastAppeal?.status === "pending" ? (
           <h2>Ваша остання заявка в обробці...</h2>
         ) : (
-          <h2>Ваша заявка відхилена! Ви більше не можете надсилати заявок.</h2>
+          <h2>Ви більше не можете надсилати заявок.</h2>
         )}
         <div className="appeal-div">
           <p>Заявка: {lastAppeal?.description}</p>
           <p>Статус: {statusLabels[lastAppeal?.status] || "В обробці..."}</p>
         </div>
+        {showAlert && (
+          <ConfirmModal
+            tittle=" "
+            message={showAlertMessage}
+            onConfirm={() => setShowAlert(false)}
+            showCancel={false}
+          />
+        )}
+        {showConfirm && (
+          <ConfirmModal
+            tittle="Підтвердження"
+            message="Відправити заявку?"
+            onConfirm={() => {
+              setShowConfirm(false);
+              requestToRecover();
+            }}
+            onCancel={() => setShowConfirm(false)}
+          />
+        )}
       </div>
     );
   }
@@ -118,11 +149,16 @@ const RequestRecoveryPage = () => {
       </div>
     );
   }
-  if (lastAppeal?.status === "rejected" && appeals.length < 3) {
+  if (lastAppeal?.status !== "pending" && appeals.length < 3) {
     return (
       <>
         <div className="limited-div">
-          <h2>Ваша заявка відхилена</h2>
+          {lastAppeal?.status === "rejected" ? (
+            <h2>Ваша заявка відхилена</h2>
+          ) : (
+            <h2>Вас знову заблоковано! Ваша остання заявка:</h2>
+          )}
+
           <div className="appeal-div">
             <h2>Заявка:</h2>
             <p> {lastAppeal?.description}</p>
@@ -143,9 +179,28 @@ const RequestRecoveryPage = () => {
               className="textarea-recovery"
               required
             />
-            <button>Надіслати заявку</button>
+            <button className="button-del-lim">Надіслати заявку</button>
           </form>
         </div>
+        {showAlert && (
+          <ConfirmModal
+            tittle=" "
+            message={showAlertMessage}
+            onConfirm={() => setShowAlert(false)}
+            showCancel={false}
+          />
+        )}
+        {showConfirm && (
+          <ConfirmModal
+            tittle="Підтвердження"
+            message="Відправити заявку?"
+            onConfirm={() => {
+              setShowConfirm(false);
+              requestToRecover();
+            }}
+            onCancel={() => setShowConfirm(false)}
+          />
+        )}
       </>
     );
   }
@@ -168,8 +223,27 @@ const RequestRecoveryPage = () => {
             className="textarea-recovery"
             required
           />
-          <button>Надіслати заявку</button>
+          <button className="button-del-lim">Надіслати заявку</button>
         </div>
+        {showAlert && (
+          <ConfirmModal
+            tittle=" "
+            message={showAlertMessage}
+            onConfirm={() => setShowAlert(false)}
+            showCancel={false}
+          />
+        )}
+        {showConfirm && (
+          <ConfirmModal
+            tittle="Підтвердження"
+            message="Відправити заявку?"
+            onConfirm={() => {
+              setShowConfirm(false);
+              requestToRecover();
+            }}
+            onCancel={() => setShowConfirm(false)}
+          />
+        )}
       </form>
     );
   }

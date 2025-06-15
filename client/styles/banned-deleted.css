@@ -12,7 +12,7 @@
   color: #4a3b2d;
 }
 
-.limited-div button {
+.button-del-lim {
   margin-top: 20px;
   border: none;
   border-radius: 5px;
@@ -22,7 +22,7 @@
   color: #fff2dd;
 }
 
-.limited-div button:hover {
+.button-del-lim:hover {
   background-color: #4a3b2d;
   transition: all 0.3s ease;
 }

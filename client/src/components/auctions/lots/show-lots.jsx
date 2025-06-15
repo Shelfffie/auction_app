@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import defaulImage from "../../../../pics/null-donut.png";
+import defaulImage from "../../../../pics/null-auction-image.png";
 import { Link } from "react-router-dom";
 import "../../../../styles/all-lots-show.css";
 

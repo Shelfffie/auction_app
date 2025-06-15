@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../../styles/valid-forms.css";
 import { useNavigate } from "react-router-dom";
+import ConfirmModal from "../alertModal";
 
 function LogInForm() {
   const [emailValue, setEmailValue] = useState("");
@@ -11,6 +12,9 @@ function LogInForm() {
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordStatus, setPasswordStatus] = useState("");
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
 
   const passwordCheck = /^(?=.*[а-яa-zA-Z])(?=.*\d).{8,}$/;
   const emailCheck = /^[\w.]+@[a-z]+\.[a-z]{2,5}$/;
@@ -52,7 +56,6 @@ function LogInForm() {
   const handleLogIn = async (e) => {
     e.preventDefault();
     try {
-      console.log("Sending login request to the server...");
       const response = await fetch("http://localhost:3000/api/login", {
         method: "POST",
         headers: {
@@ -65,27 +68,35 @@ function LogInForm() {
       });
 
       const data = await response.json();
-      console.log("Server response status:", response.status);
 
       if (response.ok) {
-        alert("Вхід успішний!");
         setEmailValue("");
         setPasswordValue("");
         localStorage.setItem("token", data.token);
-        navigate("/");
-        window.location.reload();
+        setAlertMessage("Вхід успішний!");
+        setShowAlert(true);
       } else {
         console.log("Response error data:", data);
-        alert(data.message || "Помилка входу");
       }
     } catch (error) {
       console.error("Login error: ", error);
-      alert("Щось пішло не так.");
     }
   };
 
   return (
     <div className="all-form">
+      {showAlert && (
+        <ConfirmModal
+          tittle=" "
+          message={alertMessage}
+          onConfirm={() => {
+            setShowAlert(false);
+            navigate("/");
+            window.location.reload();
+          }}
+          showCancel={false}
+        />
+      )}
       <Link to="/">
         <p className="donut-on">DonutON</p>
       </Link>
@@ -117,6 +128,7 @@ function LogInForm() {
           className={`input ${passwordStatus}`}
           required
         />
+        <p className="validation-message">{passwordMessage}</p>
         <button
           type="submit"
           className="sign-up-button log-in-margin"

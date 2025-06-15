@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../hooks/authContext";
 import { useParams, Link } from "react-router-dom";
 import io from "socket.io-client";
+import ConfirmModal from "../alertModal";
 
 import "../../../styles/lot-id.css";
 
@@ -13,6 +14,8 @@ const BidsContainer = ({ creatorId, auctionStatus, lotId, startedPrice }) => {
   const [minAmount, setMinAmount] = useState(rounded);
   const [winner, setWinner] = useState(null);
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertMessage, setShowAlertMessage] = useState("");
   const socketRef = useRef(null);
 
   useEffect(() => {
@@ -73,9 +76,10 @@ const BidsContainer = ({ creatorId, auctionStatus, lotId, startedPrice }) => {
     e.preventDefault();
 
     if (Number(value) <= minAmount) {
-      alert(
+      setShowAlertMessage(
         "Cтавка має бути більше поточного або мінімального значення ставки!"
       );
+      setShowAlert(true);
       return;
     }
 
@@ -94,10 +98,13 @@ const BidsContainer = ({ creatorId, auctionStatus, lotId, startedPrice }) => {
       );
       if (!response) throw new Error("Помилка створення ставки");
 
-      alert("Ставку зроблено!");
+      setShowAlertMessage("Ставку зроблено!");
+      setShowAlert(true);
     } catch (error) {
       console.error(error);
-      alert("Не вдалося зробити ставку");
+
+      setShowAlertMessage("Не вдалося зробити ставку");
+      setShowAlert(true);
     }
   };
 
@@ -222,6 +229,14 @@ const BidsContainer = ({ creatorId, auctionStatus, lotId, startedPrice }) => {
             </div>
           )}
         </div>
+      )}
+      {showAlert && (
+        <ConfirmModal
+          tittle=" "
+          message={showAlertMessage}
+          onConfirm={() => setShowAlert(false)}
+          showCancel={false}
+        />
       )}
     </>
   );

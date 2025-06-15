@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import ConfirmModal from "../alertModal";
 import "./../../../styles/profile.css";
 
 function ProfilePage() {
+  const [showConfirm, setShowConfirm] = useState(false);
   const [userData, setUserData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({
@@ -9,11 +11,12 @@ function ProfilePage() {
     lastname: "",
   });
 
+  const deleteClick = () => {
+    setShowConfirm(true);
+  };
+
   const deleteAccount = async () => {
-    const confirm = window.confirm(
-      "Ви впевнені, що хочете видалити обліковий запис? Всі ваші ставки та лоти будуть видалені безслідно."
-    );
-    if (!confirm) return;
+    setShowConfirm(false);
     try {
       const response = await fetch(`http://localhost:3000/api/profile/delete`, {
         method: "PUT",
@@ -191,9 +194,17 @@ function ProfilePage() {
             >
               Редагувати
             </p>
-            <p className="edit-profile big-text" onClick={deleteAccount}>
+            <p className="edit-profile big-text" onClick={deleteClick}>
               Видалити аккаунт
             </p>
+            {showConfirm && (
+              <ConfirmModal
+                tittle="Підтвердження видалення"
+                message="Ви впевнені, що хочете видалити обліковий запис? Всі ваші ставки та лоти будуть видалені безслідно."
+                onConfirm={deleteAccount}
+                onCancel={() => setShowConfirm(false)}
+              />
+            )}
           </div>
         )}
       </div>

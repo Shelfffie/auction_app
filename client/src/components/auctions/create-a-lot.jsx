@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/lots.css";
-import defaulImage from "../../../pics/null-donut.png";
+import defaulImage from "../../../pics/null-auction-image.png";
+import ConfirmModal from "../alertModal";
 
 const CreateLot = () => {
   const [image, setImage] = useState(null);
@@ -11,13 +12,19 @@ const CreateLot = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [startPrice, setStartPrice] = useState("");
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertMessage, setShowAlertMessage] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!image) {
-      alert("Будь ласка, завантажте фото");
+      setShowAlertMessage("Будь ласка, завантажте фото");
+      setShowAlert(true);
       return;
     }
 
@@ -27,33 +34,37 @@ const CreateLot = () => {
     const end = new Date(endDate);
 
     if (isNaN(price) || price <= 0 || price > 10000) {
-      alert("Початкова ціна має бути більше 0 та менше 10 000");
+      setShowAlertMessage("Початкова ціна має бути більше 0 та менше 10 000");
+      setShowAlert(true);
       return;
     }
 
     if (start < now) {
-      alert("Дата початку не може бути в минулому.");
+      setShowAlertMessage("Дата початку не може бути в минулому.");
+      setShowAlert(true);
       return;
     }
 
     if (end <= start) {
-      alert("Дата завершення має бути пізніше дати початку");
+      setShowAlertMessage("Дата завершення має бути пізніше дати початку");
+      setShowAlert(true);
       return;
     }
 
     const maxEnd = new Date(start);
     maxEnd.setDate(start.getDate() + 10);
     if (end > maxEnd) {
-      alert(
+      setShowAlertMessage(
         "Дата завершення не може бути більше ніж через 10 днів після початку"
       );
+      setShowAlert(true);
       return;
     }
 
-    const confirm = window.confirm("Cтворити лот?");
+    setShowConfirm(true);
+  };
 
-    if (!confirm) return;
-
+  const createLotSubmit = async () => {
     const formData = new FormData();
     formData.append("image", imageFile);
     formData.append("title", title);
@@ -76,7 +87,8 @@ const CreateLot = () => {
         throw new Error(data.message || "Не вдалося створити лот");
       }
 
-      alert("Лот успішно створено!");
+      setShowAlertMessage("Лот успішно створено!");
+      setShowAlert(true);
       const lotId = data.id;
       navigate(`/lot/${lotId}`);
     } catch (error) {
@@ -177,6 +189,25 @@ const CreateLot = () => {
           <button className="create-a-lot-button">Створити аукціон</button>
         </div>
       </div>
+      {showAlert && (
+        <ConfirmModal
+          tittle=" "
+          message={showAlertMessage}
+          onConfirm={() => setShowAlert(false)}
+          showCancel={false}
+        />
+      )}
+      {showConfirm && (
+        <ConfirmModal
+          tittle="Підтвердження створення"
+          message="Створити лот?"
+          onConfirm={() => {
+            setShowConfirm(false);
+            createLotSubmit();
+          }}
+          onCancel={() => setShowConfirm(false)}
+        />
+      )}
     </form>
   );
 };

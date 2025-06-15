@@ -32,12 +32,6 @@ const NewRecoveryController = async (req, res) => {
     const appealsCount = appeals.length;
     const lastAppeal = appeals[0];
 
-    if (lastAppeal?.status === "approved") {
-      return res.status(403).json({
-        message: "Ваша заявка вже схвалена. Нові заявки не дозволені.",
-      });
-    }
-
     if (lastAppeal?.status === "pending") {
       return res.status(403).json({
         message: "Ваша заявка вже в обробці.",

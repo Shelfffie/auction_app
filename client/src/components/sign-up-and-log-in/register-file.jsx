@@ -72,7 +72,7 @@ const SignUpForm = () => {
 
           navigate("/success-sign-up");
         } else {
-          alert(data.message || "Authenfication error");
+          alert(data.message || "Помилка реєстрації");
         }
       } catch (error) {
         console.error("Помилка при запиті", error);

@@ -1,5 +1,4 @@
 const { Appeals, Users } = require("../../models");
-const { Op } = require("sequelize");
 
 const showActiveAppeals = async (req, res) => {
   try {

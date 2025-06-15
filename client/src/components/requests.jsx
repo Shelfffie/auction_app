@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/lots.css";
 import "../../styles/request.css";
 import defaulImage from "../../pics/null-donut.png";
+import ConfirmModal from "./alertModal";
 
 const NewRequest = () => {
   const [passport, setPassport] = useState(null);
@@ -14,25 +15,31 @@ const NewRequest = () => {
   const [phone, setPhone] = useState("");
   const navigate = useNavigate();
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertMessage, setShowAlertMessage] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const numberCheck = /^\d{9}$/;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!passport || !selfie) {
-      alert("Будь ласка, завантажте фото");
+      setShowAlertMessage("Будь ласка, завантажте фото");
+      setShowAlert(true);
       return;
     }
 
     if (!numberCheck.test(phone)) {
-      alert("Введіть валідний номер телефону");
+      setShowAlertMessage("Введіть валідний номер телефону");
+      setShowAlert(true);
       return;
     }
 
-    const confirm = window.confirm("Відправити заявку?");
+    setShowConfirm(true);
+  };
 
-    if (!confirm) return;
-
+  const sendRequest = async () => {
     const formData = new FormData();
     formData.append("passport", passportFile);
     formData.append("selfie", selfieFile);
@@ -55,7 +62,8 @@ const NewRequest = () => {
         throw new Error(data.message || "Не вдалося відправити заявку");
       }
 
-      alert("Заявку створено!");
+      setShowAlertMessage("Заявку створено!");
+      setShowAlert(true);
       const requestId = data.id;
       navigate(`/`);
     } catch (error) {
@@ -168,6 +176,25 @@ const NewRequest = () => {
           <button className="make-request-button">Створити заявку</button>
         </div>
       </div>
+      {showAlert && (
+        <ConfirmModal
+          tittle=" "
+          message={showAlertMessage}
+          onConfirm={() => setShowAlert(false)}
+          showCancel={false}
+        />
+      )}
+      {showConfirm && (
+        <ConfirmModal
+          tittle="Підтвердження"
+          message="Відправити заявку? Її не можна буде змінити."
+          onConfirm={() => {
+            setShowConfirm(false);
+            sendRequest();
+          }}
+          onCancel={() => setShowConfirm(false)}
+        />
+      )}
     </form>
   );
 };

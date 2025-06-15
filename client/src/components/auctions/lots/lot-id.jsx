@@ -9,8 +9,17 @@ import AuctionControl from "../control-panel";
 import "../../../../styles/lots.css";
 import "../../../../styles/lot-id.css";
 import defaulImage from "../../../../pics/null-donut.png";
+import ConfirmModal from "../../alertModal";
 
 const LotId = () => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertMessage, setShowAlertMessage] = useState("");
+  const [showConfirm, setShowConfirm] = useState({
+    message: "",
+    onCofirm: null,
+    show: false,
+  });
+
   const formatDateForInput = (isoString) => {
     const date = new Date(isoString);
     const offset = date.getTimezoneOffset() * 60000;
@@ -84,11 +93,15 @@ const LotId = () => {
     setIsEditing((prev) => !prev);
   };
 
+  const handleFinish = async () => {
+    setShowConfirm({
+      message: "Завершити аукціон?",
+      onConfirm: finishAuction,
+      show: true,
+    });
+  };
+
   const finishAuction = async () => {
-    const confirm = window.confirm(
-      "Ви впевнені, що хочете завершити лот передчасно?"
-    );
-    if (!confirm) return;
     try {
       const now = new Date();
       const formattedNow = formatInputToISO(now);
@@ -119,10 +132,15 @@ const LotId = () => {
     }
   };
 
-  const toggleAuctionStatus = async () => {
-    const confirm = window.confirm("Ви впевнені, що хочете відмінити лот?");
-    if (!confirm) return;
+  const handleСancel = async () => {
+    setShowConfirm({
+      message: "Відмінити аукціон?",
+      onConfirm: toggleAuctionStatus,
+      show: true,
+    });
+  };
 
+  const toggleAuctionStatus = async () => {
     const newStatus = lotStatus === "cancelled" ? "pending" : "cancelled";
 
     let newStartTime = editedData.startTime;
@@ -160,10 +178,15 @@ const LotId = () => {
     }
   };
 
-  const SaveChanges = async () => {
-    const confirm = window.confirm("Ви впевнені, що хочете зберегти лот?");
-    if (!confirm) return;
+  const handleSave = async () => {
+    setShowConfirm({
+      message: "Зберегти зміни?",
+      onConfirm: SaveChanges,
+      show: true,
+    });
+  };
 
+  const SaveChanges = async () => {
     const now = new Date();
     const start = new Date(editedData.startTime);
     const end = new Date(editedData.endTime);
@@ -174,21 +197,24 @@ const LotId = () => {
       lotData.status !== "active" &&
       start < now
     ) {
-      alert("Дата початку не може бути в минулому.");
+      setShowAlertMessage("Дата початку не може бути в минулому.");
+      setShowAlert(true);
       return;
     }
 
     const endData = new Date(start);
     endData.setDate(start.getDate() + 10);
     if (end > endData) {
-      alert(
+      setShowAlertMessage(
         "Дата завершення не може бути більше ніж через 10 днів після початку."
       );
+      setShowAlert(true);
       return;
     }
 
     if (price > 10000) {
-      alert("Початкова ціна не може перевищувати 10000.");
+      setShowAlertMessage("Початкова ціна не може перевищувати 10000.");
+      setShowAlert(true);
       return;
     }
 
@@ -224,13 +250,15 @@ const LotId = () => {
     }
   };
 
+  const handleDelButton = async () => {
+    setShowConfirm({
+      message: "Видалити лот? Його не можна буде відновити.",
+      onConfirm: hadnleDelete,
+      show: true,
+    });
+  };
+
   const hadnleDelete = async () => {
-    const confirmDelete = window.confirm(
-      "Ви впевнені, що хочете видалити лот?"
-    );
-
-    if (!confirmDelete) return;
-
     try {
       const response = await fetch(`${LINK}${id}`, {
         method: "DELETE",
@@ -243,11 +271,13 @@ const LotId = () => {
         throw new Error("Не вдалося видалити лот");
       }
 
-      alert("Лот успішно видалено");
+      setShowAlertMessage("Лот успішно видалено");
+      setShowAlert(true);
       navigate("/");
     } catch (error) {
       console.error("Помилка видалення лоту:", error);
-      alert("Щось пішло не так при видаленні");
+      setShowAlertMessage("Щось пішло не так при видаленні");
+      setShowAlert(true);
     }
   };
 
@@ -450,18 +480,39 @@ const LotId = () => {
       {(user?.id === lotData?.creator?.userId || user?.user_role === "admin") &&
         (isEditing ? (
           <div className="control-panel-container">
-            <button onClick={SaveChanges}>Зберегти зміни</button>
+            <button onClick={handleSave}>Зберегти зміни</button>
           </div>
         ) : (
           <AuctionControl
             onEdit={toggleEditMode}
-            onToggleStatus={toggleAuctionStatus}
+            onToggleStatus={handleСancel}
             auctionStatus={lotData.status}
-            onFinish={finishAuction}
-            onDelete={hadnleDelete}
+            onFinish={handleFinish}
+            onDelete={handleDelButton}
             creatorId={lotData?.creator?.userId}
           />
         ))}
+      {showAlert && (
+        <ConfirmModal
+          tittle=" "
+          message={showAlertMessage}
+          onConfirm={() => setShowAlert(false)}
+          showCancel={false}
+        />
+      )}
+      {showConfirm && (
+        <ConfirmModal
+          tittle="Підтвердження"
+          message={showConfirm.message}
+          onConfirm={() => {
+            showConfirm.onConfirm?.();
+            setShowConfirm({ message: "", onConfirm: null, show: false });
+          }}
+          onCancel={() =>
+            setShowConfirm({ message: "", onConfirm: null, show: false })
+          }
+        />
+      )}
     </div>
   );
 };
